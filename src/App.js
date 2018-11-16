@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+
+
+import { CurrentUserProvider } from './context/CurrentUser.context.js'
+import Navbar from './components/Navbar.js'
+import './App.css'
+import MainPage from './components/MainPage.js'
+import Login from './components/Login.js'
+import NotFound from './components/NotFound.js'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <Router>
+        <CurrentUserProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path='/' component={MainPage} />
+            <Route exact path='/login' component={Login} />
+            <Route component={NotFound} />
+          </Switch>
+        </CurrentUserProvider>
+      </Router>
+    )
   }
 }
 
-export default App;
+export default App
