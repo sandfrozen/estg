@@ -9,12 +9,25 @@ export class CurrentUserProvider extends Component {
     redirecting: false
   }
 
+  componentDidMount () {
+    const cookieUser = localStorage.getItem('user')
+
+    if (cookieUser) {
+      this.setState({
+        user: JSON.parse(cookieUser)
+      })
+    }
+  }
+
   getUser = () => {
-    this.setState({
-      user: { name: 'Tomek B' },
-      processing: false,
-      redirecting: true
-    })
+    this.setState(
+      {
+        user: { name: 'Tomek B' },
+        processing: false,
+        redirecting: true
+      },
+      () => localStorage.setItem('user', JSON.stringify(this.state.user))
+    )
     // window.FB.api('/me', user => {
     //   this.setState({
     //     user,
@@ -26,7 +39,6 @@ export class CurrentUserProvider extends Component {
 
   login = () => {
     this.setState({ processing: true })
-    console.log('login')
     setTimeout(() => {
       this.getUser()
     }, 1000)
@@ -43,7 +55,7 @@ export class CurrentUserProvider extends Component {
   }
 
   logout = () => {
-    this.setState({ user: null })
+    this.setState({ user: null }, () => localStorage.setItem('user', null))
   }
 
   render () {

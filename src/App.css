@@ -8,23 +8,8 @@ body {
   color: #fff;
 }
 
-.navbar {
-  background: #2c3848;
+.paper {
+  margin: 12px 24px;
+  color: black;
   padding: 12px;
-  color: #45b7b8;
-  display: flex;
-  justify-content: space-between;
-}
-
-.nav-link:not(:first-child) {
-  padding-left: 8px;
-}
-
-a {
-  color: #fff;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #f7de1c;
 }
