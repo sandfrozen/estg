@@ -10,12 +10,16 @@ export class CurrentUserProvider extends Component {
   }
 
   componentDidMount () {
-    const cookieUser = localStorage.getItem('user')
+    try {
+      const cookieUser = JSON.parse(localStorage.getItem('user'))
 
-    if (cookieUser) {
-      this.setState({
-        user: JSON.parse(cookieUser)
-      })
+      if (cookieUser) {
+        this.setState({
+          user: cookieUser
+        })
+      }
+    } catch (e) {
+      console.log('CurrentUserProvider', e)
     }
   }
 

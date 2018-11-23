@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import './style.css'
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import IconButton from '@material-ui/core/IconButton'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
 
 import image from './praca.jpg'
 
@@ -20,7 +19,7 @@ const pois = [
     image: {
       imageid: 1,
       title: 'My Praça do Comércio',
-      filePath: './praca.jpg',
+      filePath: 'https://www.visitlisboa.com/sites/default/files/md-slider-image/2_33.jpg',
       private: false,
       datecreated: '2018-11-11'
     }
@@ -34,7 +33,7 @@ const pois = [
     image: {
       imageid: 1,
       title: 'My Praça do Comércio',
-      filePath: './praca.jpg',
+      filePath: 'https://www.visitlisboa.com/sites/default/files/md-slider-image/2_33.jpg',
       private: false,
       datecreated: '2018-11-11'
     }
@@ -48,7 +47,7 @@ const pois = [
     image: {
       imageid: 1,
       title: 'My Praça do Comércio',
-      filePath: './praca.jpg',
+      filePath: 'https://www.visitlisboa.com/sites/default/files/md-slider-image/2_33.jpg',
       private: false,
       datecreated: '2018-11-11'
     }
@@ -62,7 +61,7 @@ const pois = [
     image: {
       imageid: 1,
       title: 'My Praça do Comércio',
-      filePath: './praca.jpg',
+      filePath: 'https://www.visitlisboa.com/sites/default/files/md-slider-image/2_33.jpg',
       private: false,
       datecreated: '2018-11-11'
     }
@@ -72,22 +71,25 @@ const pois = [
 class MainPage extends Component {
   render () {
     return (
-      <div className='root'>
-        <Grid container spacing={1} className='pois-container'>
-          <Grid item xs={3} className='pois-mini'>
-            {pois.map(poi => (
-              <div className='poi-mini'>
-                {poi.title}
+      <div className='root-main'>
+        <GridList className='gridList'>
+          {pois.map(tile => (
+            <GridListTile key={tile.poiid} className='my-col'>
+              <img src={tile.image.filePath} alt={tile.title} />
+              <GridListTileBar
+                title={tile.title}
+                className='titleBar title'
+                actionIcon={
+                  <IconButton>
+                    <StarBorderIcon className='title' />
+                  </IconButton>
+                }
+              />
+              <div className='overlay'>
               </div>
-            ))}
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className='paper' id='map'>Map</Paper>
-          </Grid>
-          <Grid item xs={3}>
-            <Paper className='paper'>Desc</Paper>
-          </Grid>
-        </Grid>
+            </GridListTile>
+          ))}
+        </GridList>
       </div>
     )
   }
