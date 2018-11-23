@@ -20,14 +20,12 @@ class App extends Component {
       <Router>
         <CurrentUserProvider>
           <Navbar />
-          <div className='my-container'>
             <Switch>
               <Route exact path='/' component={MainPage} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/account' component={Account} />
               <Route component={NotFound} />
             </Switch>
-          </div>
         </CurrentUserProvider>
       </Router>
     )
