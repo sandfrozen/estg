@@ -145,7 +145,7 @@ class MainPage extends Component {
               className='my-col'
               onMouseEnter={this.handleClickOnPoi(poi)}
             >
-              <img src={poi.image.filePath} alt={poi.title} />
+              <img src={poi.image.filePath} alt={poi.title} className='col-img' />
               <GridListTileBar
                 title={poi.title}
                 className='titleBar'
@@ -165,6 +165,9 @@ class MainPage extends Component {
             </GridListTile>
           ))}
         </GridList>
+        <Grid container>
+          <div>This is 3</div>
+        </Grid>
       </div>
     )
   }
