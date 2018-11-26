@@ -8,11 +8,11 @@ import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import GoogleMapReact from 'google-map-react'
 import PlaceIcon from '@material-ui/icons/Place'
 
 import { KEY } from '../../secrets/googleMapsApi'
 import { Divider } from '@material-ui/core'
+import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
 
 const pois = [
   {
@@ -112,23 +112,14 @@ class MainPage extends Component {
         <Grid container>
           <Grid
             item
-            md={mapSize}
-            onMouseEnter={this.handleMap}
-            xs={12}
+            md={6}
+            xs={12}         
             className='grid-item'
             id='map'
           >
-            <Paper>
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: KEY }}
-                defaultCenter={this.state.center}
-                defaultZoom={this.state.zoom}
-              >
-                {poisMarkers}
-              </GoogleMapReact>
-            </Paper>
+            <GoogleApiWrapper />
           </Grid>
-          <Grid item md={12 - mapSize} xs={12} className='grid-item' id='desc'>
+          <Grid item md={6} xs={12} className='grid-item' id='desc'>
             <Paper>
               <div className='desc-paper'>
                 <Typography component='h2' variant='headline' gutterBottom>
