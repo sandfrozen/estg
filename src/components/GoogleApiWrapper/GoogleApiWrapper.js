@@ -14,18 +14,17 @@ const mapContainer = {
   position: 'relative'
 }
 
-
 export class MapContainer extends Component {
   render () {
     return (
       <Map
         google={this.props.google}
-        zoom={14}
+        zoom={13}
         containerStyle={mapContainer}
         style={mapStyle}
         initialCenter={{
-          lat: -1.2884,
-          lng: 36.8233
+          lat: 38.706936,
+          lng: -9.136493
         }}
       >
         <Marker onClick={this.onMarkerClick} name={'Current location'} />
@@ -40,7 +39,7 @@ export class MapContainer extends Component {
   }
 }
 
-const LoadingContainer = props => <div>Fancy loading container!</div>
+const LoadingContainer = props => <div style={{color: 'black'}}>Map is loading...</div>
 
 export default GoogleApiWrapper({
   apiKey: KEY,
