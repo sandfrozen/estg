@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom'
 
 import { CurrentUserProvider } from './context/CurrentUser.context.js'

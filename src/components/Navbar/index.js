@@ -9,8 +9,6 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import './style.css'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
 
 class Navbar extends Component {
   state = {
@@ -18,7 +16,6 @@ class Navbar extends Component {
   }
 
   render () {
-    const { open } = this.state
     return (
       <CurrentUserConsumer>
         {({ user, logout }) => (
@@ -61,22 +58,3 @@ class Navbar extends Component {
 }
 
 export default Navbar
-
-{
-  /* <div className='navbar'>
-            <div className='nav-left'>
-              <Link to={{ pathname: '/' }} className='nav-link'>Main</Link>
-            </div>
-            <div className='nav-center' />
-            <div className='nav-right'>
-              {user
-                ? <Fragment>
-                    Hello {user.name}
-                    <button onClick={logout}>Logout</button>
-                  </Fragment>
-                : <Link to={{ pathname: '/login' }} className='nav-link'>
-                    Login
-                  </Link>}
-            </div>
-          </div> */
-}

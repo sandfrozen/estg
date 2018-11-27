@@ -1,6 +1,8 @@
 import { KEY } from '../../secrets/googleMapsApi'
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import Paper from '@material-ui/core/Paper'
 import './style.css'
 
 const mapStyle = {
@@ -15,31 +17,79 @@ const mapContainer = {
 }
 
 export class MapContainer extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      pois: this.props.pois,
+      poi: this.props.poi
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      poi: nextProps.poi
+    })
+  }
+
+  onMarkerClick = poi => e => {
+    this.setState({ poi })
+  }
+
   render () {
+    const pois = this.state.pois
+    const poi = this.state.poi
+    // let pois = []
+    // if (poi) {
+    //   poiz.forEach(p => {
+    //     if (p !== poi) {
+    //       pois.push(p)
+    //     }
+    //   })
+    // } else {
+    //   pois = poiz
+    // }
+
+    const markers = pois.map(item => {
+      return (
+        <Marker
+          key={item.poiid}
+          position={{ lat: item.lat, lng: item.lng }}
+          onClick={this.onMarkerClick(item)}
+        />
+      )
+    })
     return (
       <Map
         google={this.props.google}
-        zoom={13}
+        zoom={12}
         containerStyle={mapContainer}
         style={mapStyle}
         initialCenter={{
           lat: 38.706936,
-          lng: -9.136493
+          lng: -9.151234
         }}
       >
-        <Marker onClick={this.onMarkerClick} name={'Current location'} />
-
-        <InfoWindow onClose={this.onInfoWindowClose}>
-          <div>
-            <h1>POi name</h1>
-          </div>
-        </InfoWindow>
+        {pois && markers}
+        {poi &&
+          <InfoWindow visible position={{ lat: poi.lat, lng: poi.lng }}>
+            <div>
+              <h3>{poi.title}</h3>
+            </div>
+          </InfoWindow>}
       </Map>
     )
   }
 }
 
-const LoadingContainer = props => <div style={{color: 'black'}}>Map is loading...</div>
+const LoadingContainer = props => (
+  <Paper>
+    <div style={{ flexGrow: 1 }}>
+      Map is loading...
+      <LinearProgress />
+    </div>
+  </Paper>
+)
 
 export default GoogleApiWrapper({
   apiKey: KEY,

@@ -8,9 +8,6 @@ import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import PlaceIcon from '@material-ui/icons/Place'
-
-import { KEY } from '../../secrets/googleMapsApi'
 import { Divider } from '@material-ui/core'
 import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
 
@@ -31,6 +28,20 @@ const pois = [
   },
   {
     poiid: 2,
+    title: 'Castelo de S. Jorge',
+    description: 'São Jorge Castle (Portuguese: Castelo de São Jorge; Portuguese pronunciation: [kɐʃˈtɛlu dɨ sɐ̃w̃ ˈʒɔɾʒ(ɨ)]; Saint George Castle) is a Moorish castle occupying a commanding hilltop overlooking the historic centre of the Portuguese city of Lisbon and Tagus River. The strongly fortified citadel dates from medieval period of Portuguese history, and is one of the main tourist sites of Lisbon.',
+    lat: '38.7139092',
+    lng: '-9.1334762',
+    image: {
+      imageid: 8,
+      title: 'My Castelo de S. Jorge',
+      filePath: 'https://www.360meridianos.com/wp-content/uploads/2014/10/Castelo-de-São-Jorge-Lisboa.jpg',
+      private: false,
+      datecreated: '2018-11-08'
+    }
+  },
+  {
+    poiid: 3,
     title: 'Ponte 25 de Abril',
     description: 'The 25 de Abril Bridge (Ponte 25 de Abril, 25th of April Bridge, Portuguese pronunciation: [ˈpõt(ɨ) ˈvĩt i ˈsĩku ðɨ ɐˈβɾiɫ]) is a suspension bridge connecting the city of Lisbon, capital of Portugal, to the municipality of Almada on the left (south) bank of the Tagus river. It was inaugurated on August 6, 1966, and a train platform was added in 1999. It is often compared to the Golden Gate Bridge in San Francisco, US, because they are both suspension bridges of similar color. It was built by the American Bridge Company which constructed the San Francisco–Oakland Bay Bridge, but not the Golden Gate. With a total length of 2,277 metres (7,470 ft), it is the 32nd largest suspension bridge in the world. The upper deck carries six car lanes, while the lower deck carries a double track railway electrified at 25 kV AC. Until 1974, the bridge was named Salazar Bridge. The name "25 de Abril" commemorates the Carnation Revolution.',
     lat: '38.6904756',
@@ -44,7 +55,7 @@ const pois = [
     }
   },
   {
-    poiid: 3,
+    poiid: 4,
     title: 'Torre de Belém',
     description: 'Belém Tower (Portuguese: Torre de Belém, pronounced [ˈtoʁ(ɨ) dɨ bɨˈlɐ̃ȷ̃]), or the "Tower of St Vincent",[1] is a fortified tower located in the civil parish of Santa Maria de Belém in the municipality of Lisbon, Portugal. It is a UNESCO World Heritage Site (along with the nearby Jerónimos Monastery)[2] because of the significant role it played in the Portuguese maritime discoveries of the era of the Age of Discoveries.[3] The tower was commissioned by King John II to be part of a defence system at the mouth of the Tagus river and a ceremonial gateway to Lisbon.[3]',
     lat: '38.6916389',
@@ -55,20 +66,6 @@ const pois = [
       filePath: 'http://www.patrimoniocultural.gov.pt/static/data/cache/f8/72/f872e73eef92ad2d755293b95634a4a6.jpg',
       private: false,
       datecreated: '2018-11-09'
-    }
-  },
-  {
-    poiid: 4,
-    title: 'Castelo de S. Jorge',
-    description: 'São Jorge Castle (Portuguese: Castelo de São Jorge; Portuguese pronunciation: [kɐʃˈtɛlu dɨ sɐ̃w̃ ˈʒɔɾʒ(ɨ)]; Saint George Castle) is a Moorish castle occupying a commanding hilltop overlooking the historic centre of the Portuguese city of Lisbon and Tagus River. The strongly fortified citadel dates from medieval period of Portuguese history, and is one of the main tourist sites of Lisbon.',
-    lat: '38.7075293',
-    lng: '-9.1365861',
-    image: {
-      imageid: 8,
-      title: 'My Castelo de S. Jorge',
-      filePath: 'https://www.360meridianos.com/wp-content/uploads/2014/10/Castelo-de-São-Jorge-Lisboa.jpg',
-      private: false,
-      datecreated: '2018-11-08'
     }
   }
 ]
@@ -93,31 +90,13 @@ class MainPage extends Component {
   }
 
   render () {
-    const { clickedPoi, mapSize } = this.state
-    const poisMarkers = pois.map(poi => (
-      <div
-        lat={poi.lat}
-        lng={poi.lng}
-        className='marker'
-        onClick={this.handleClickOnPoi(poi)}
-      >
-        {poi.title}
-        <PlaceIcon />
-
-      </div>
-    ))
+    const { clickedPoi } = this.state
 
     return (
       <div className='root-main'>
         <Grid container>
-          <Grid
-            item
-            md={6}
-            xs={12}         
-            className='grid-item'
-            id='map'
-          >
-            <GoogleApiWrapper />
+          <Grid item md={6} xs={12} className='grid-item' id='map'>
+            <GoogleApiWrapper pois={pois} poi={clickedPoi} />
           </Grid>
           <Grid item md={6} xs={12} className='grid-item' id='desc'>
             <Paper>
@@ -145,7 +124,7 @@ class MainPage extends Component {
               className='my-col'
               onMouseEnter={this.handleClickOnPoi(poi)}
             >
-              <img src={poi.image.filePath} alt={poi.title} className='col-img' />
+              <img src={poi.image.filePath} alt={poi.title} />
               <GridListTileBar
                 title={poi.title}
                 className='titleBar'
