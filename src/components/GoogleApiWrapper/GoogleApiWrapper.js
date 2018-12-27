@@ -33,6 +33,7 @@ export class MapContainer extends Component {
   }
 
   onMarkerClick = poi => e => {
+    this.props.markerChanged(poi)
     this.setState({ poi })
   }
 
@@ -53,18 +54,21 @@ export class MapContainer extends Component {
     const markers = pois.map(item => {
       return (
         <Marker
-          key={item.poiid}
+          key={item.poiId}
           position={{ lat: item.lat, lng: item.lng }}
           onClick={this.onMarkerClick(item)}
         />
       )
     })
+
+    const center_to_poi = poi && { lat: poi.lat, lng: poi.lng }
     return (
       <Map
         google={this.props.google}
         zoom={12}
         containerStyle={mapContainer}
         style={mapStyle}
+        center={center_to_poi}
         initialCenter={{
           lat: 38.706936,
           lng: -9.151234

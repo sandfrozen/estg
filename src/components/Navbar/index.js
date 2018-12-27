@@ -9,6 +9,14 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import './style.css'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+// import StyleSheet from 'react-style';
+// import { grey } from '@material-ui/core/colors';
+
+// const styles = StyleSheet.create({
+//   navbar_color: {
+//     background: grey
+//   },
+// });
 
 class Navbar extends Component {
   state = {
@@ -20,7 +28,7 @@ class Navbar extends Component {
       <CurrentUserConsumer>
         {({ user, logout }) => (
           <div className='root2'>
-            <AppBar position='static'>
+            <AppBar position='static' className='dark_yellow'>
               <Toolbar>
                 <IconButton
                   className='menuButton'
@@ -34,9 +42,9 @@ class Navbar extends Component {
                   component={Link}
                   to='/'
                   color='inherit'
-                  className='grow'
+                  className='grow no_link'
                 >
-                  ESTG
+                  Lisboa Myths
                 </Typography>
                 {user
                   ? <Fragment>

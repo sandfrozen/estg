@@ -3,8 +3,26 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Source Sans Pro', sans-serif;
-  background: rgb(209, 209, 209);
+  /* background: rgb(209, 209, 209); */
+  /* background: rgb(148, 144, 85); */
+  background: rgb(122,127,140) !important;
   /* #706381; */
   /* #1f2427; */
   color: #000;
+}
+
+.grey {
+  background: rgb(76,71,81) !important;
+}
+.dark_blue {
+  background: rgb(28,44,87) !important;
+}
+.blue {
+  background: rgb(0,51,165) !important;
+}
+.light_grey {
+  background: rgb(122,127,140) !important;
+}
+.dark_yellow {
+  background: rgb(147,107,42) !important;
 }

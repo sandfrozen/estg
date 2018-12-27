@@ -1,9 +1,15 @@
+
+
 .root2 {
   flex-grow: 1;
 }
 
 .grow {
   flex-grow: 1;
+}
+
+.no_link {
+  text-decoration: none;
 }
 
 .menuButton {
