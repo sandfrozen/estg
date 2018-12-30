@@ -26,7 +26,7 @@ export class CurrentUserProvider extends Component {
   getUser = () => {
     this.setState(
       {
-        user: { name: 'Tomek B' },
+        user: { id: 2, name: 'Tomek B' },
         processing: false,
         redirecting: true
       },

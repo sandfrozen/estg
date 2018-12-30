@@ -61,14 +61,15 @@ export class MapContainer extends Component {
       )
     })
 
-    const center_to_poi = poi && { lat: poi.lat, lng: poi.lng }
+    // const center_to_poi = poi && { lat: poi.lat, lng: poi.lng }
+    // center={center_to_poi}
     return (
       <Map
         google={this.props.google}
         zoom={12}
         containerStyle={mapContainer}
         style={mapStyle}
-        center={center_to_poi}
+        
         initialCenter={{
           lat: 38.706936,
           lng: -9.151234

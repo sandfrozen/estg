@@ -8,6 +8,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import './style.css'
 
 class PoiGridListTile extends Component {
+
   onClick = poi => event => {
     this.props.handleClickOnPoi(poi)
   }

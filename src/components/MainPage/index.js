@@ -95,7 +95,7 @@ class MainPage extends Component {
     // this.setState({ mapSize: 9 })
   }
 
-  handleClickOnPoi = clickedPoi => event => {
+  handleClickOnPoi = clickedPoi => {
     this.setState({ clickedPoi })
   }
 
@@ -121,7 +121,7 @@ class MainPage extends Component {
         </Grid>
 
         <GridList className='gridList'>
-          <PoiGridListTile pois={pois} onClick={this.handleClickOnPoi} />
+          <PoiGridListTile pois={pois} handleClickOnPoi={this.handleClickOnPoi} />
         </GridList>
         <Grid container>
           <div>This is 3</div>

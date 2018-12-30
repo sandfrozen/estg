@@ -76,16 +76,13 @@
   #desc {
     padding-top: 8px;
   }
+  .grid-item {
+    height: 35vh !important;
+  }
 }
 
 .marker {
   color: red;
-}
-
-@media (max-width: 959px) {
-  .grid-item {
-    height: 35vh !important;
-  }
 }
 
 .text {
@@ -94,7 +91,7 @@
 
 .grid-item {
   padding: 16px;
-  height: 600px;
+  height: 70vh;
 }
 
 .grid-item>* {

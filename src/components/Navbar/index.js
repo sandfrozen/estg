@@ -46,16 +46,26 @@ class Navbar extends Component {
                 >
                   Lisboa places
                 </Typography>
-                {user
-                  ? <Fragment>
-                    <Button color='inherit' component={Link} to='/account'>
+                {user ? (
+                  <Fragment>
+                    <Button
+                      color='inherit'
+                      component={Link}
+                      to={{
+                        pathname: `/user/${user.id}/${user.name.replace(' ','-')}`,
+                      }}
+                    >
                       {user.name} <AccountCircle />
                     </Button>
-                    <Button color='inherit' onClick={logout}>Logout</Button>
+                    <Button color='inherit' onClick={logout}>
+                      Logout
+                    </Button>
                   </Fragment>
-                  : <Button color='inherit' component={Link} to='/login'>
-                      Login | New Account
-                    </Button>}
+                ) : (
+                  <Button color='inherit' component={Link} to='/login'>
+                    Login | New Account
+                  </Button>
+                )}
               </Toolbar>
             </AppBar>
           </div>
