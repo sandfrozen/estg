@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Paper from '@material-ui/core/Paper'
 import { Redirect } from 'react-router-dom'
 
 const NotFound = ({ location }) => {
@@ -18,11 +19,11 @@ const NotFound = ({ location }) => {
   )
 
   return (
-    <div onClick={countDown}>
+    <Paper onClick={countDown} className='paper-w-w'>
       <p>No math for <code>{location.pathname}</code></p>
       <p>Redirect to homepage in {counter} seconds</p>
       {counter === 0 && <Redirect to='/' />}
-    </div>
+    </Paper>
   )
 }
 

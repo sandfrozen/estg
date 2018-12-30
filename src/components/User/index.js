@@ -5,13 +5,13 @@ import { Redirect } from 'react-router-dom'
 class User extends Component {
   render () {
     let { id, name } = this.props.match.params || { id: '0', name: '0' }
-    name = name.replace('-', ' ')
+    name = name.split('-').join(' ')
     // fetch user by id and name
     // id = '0'
     // name = '0'
     if (id !== '0' && name !== '0') {
       return (
-        <Paper className='paper'>
+        <Paper className='paper-w-w'>
           Account info {id} {name}
         </Paper>
       )

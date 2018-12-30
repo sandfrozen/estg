@@ -26,7 +26,6 @@ class PoiInfo extends Component {
         </div>
       )
     } else {
-      const path = `/poi/${poi.poiId}`
       return (
         <div className='poi_info' id='poi_info'>
           <div>
@@ -34,7 +33,7 @@ class PoiInfo extends Component {
           </div>
           <div className='poi_title'>{poi.title}</div>
           <div className='poi_desc'>{poi.description}</div>
-          <Button color='primary' component={Link} to={path}>Show more</Button>
+          <Button color='primary' component={Link} to={`/poi/${poi.poiId}/${poi.title.split(' ').join('-')}`}>Show more</Button>
         </div>
       )
     }

@@ -1,0 +1,11 @@
+.buttons-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.button-e {
+  flex-grow: 1;
+}

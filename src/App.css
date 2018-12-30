@@ -27,3 +27,9 @@ body {
 .dark_yellow {
   background: rgb(147,107,42) !important;
 }
+
+.paper-w-w {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 24px;
+}

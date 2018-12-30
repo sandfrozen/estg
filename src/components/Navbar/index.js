@@ -52,7 +52,7 @@ class Navbar extends Component {
                       color='inherit'
                       component={Link}
                       to={{
-                        pathname: `/user/${user.id}/${user.name.replace(' ','-')}`,
+                        pathname: `/user/${user.id}/${user.name.split(' ').join('-')}`,
                       }}
                     >
                       {user.name} <AccountCircle />
