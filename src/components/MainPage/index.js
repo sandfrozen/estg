@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import './style.css'
 import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
-import GridListTileBar from '@material-ui/core/GridListTileBar'
-import IconButton from '@material-ui/core/IconButton'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { Divider } from '@material-ui/core'
 import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
 import PoiInfo from './PoiInfo/PoiInfo'
+import PoiGridListTile from './PoiGridListTile/PoiGridListTile';
 
 const pois = [
   {
@@ -124,25 +121,7 @@ class MainPage extends Component {
         </Grid>
 
         <GridList className='gridList'>
-          {pois.map(poi => (
-            <GridListTile
-              key={poi.poiId}
-              className='my-col'
-              onClick={this.handleClickOnPoi(poi)}
-            >
-              <img src={poi.image.filePath} alt={poi.title} />
-              <GridListTileBar
-                title={poi.title}
-                className='titleBar'
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className='title' />
-                  </IconButton>
-                }
-              />
-              <div className='shadow' />
-            </GridListTile>
-          ))}
+          <PoiGridListTile pois={pois} onClick={this.handleClickOnPoi} />
         </GridList>
         <Grid container>
           <div>This is 3</div>

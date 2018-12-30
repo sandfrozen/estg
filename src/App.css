@@ -5,7 +5,8 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   /* background: rgb(209, 209, 209); */
   /* background: rgb(148, 144, 85); */
-  background: rgb(122,127,140) !important;
+  /* background: rgb(122,127,140) !important; */
+  background: rgba(95, 99, 109, 0.33) !important;
   /* #706381; */
   /* #1f2427; */
   color: #000;
