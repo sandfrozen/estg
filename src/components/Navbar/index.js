@@ -44,7 +44,7 @@ class Navbar extends Component {
                   color='inherit'
                   className='grow no_link'
                 >
-                  Lisboa Myths
+                  Lisboa places
                 </Typography>
                 {user
                   ? <Fragment>
