@@ -51,9 +51,7 @@ class Navbar extends Component {
                     <Button
                       color='inherit'
                       component={Link}
-                      to={{
-                        pathname: `/user/${user.id}/${user.name.split(' ').join('-')}`,
-                      }}
+                      to={`/user/${user.name.split(' ').join('-')}-${user.id}`}
                     >
                       {user.name} <AccountCircle />
                     </Button>

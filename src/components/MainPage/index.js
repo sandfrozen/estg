@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import './style.css'
+import './community.css'
 import GridList from '@material-ui/core/GridList'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -8,6 +9,9 @@ import { Divider } from '@material-ui/core'
 import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
 import PoiInfo from './PoiInfo/PoiInfo'
 import PoiGridListTile from './PoiGridListTile/PoiGridListTile';
+import NewsFeed from './NewsFeed/NewsFeed';
+import CommentsLikes from './CommentsLikes/CommentsLikes';
+import Friends from './Friends/Friends';
 
 const pois = [
   {
@@ -106,11 +110,11 @@ class MainPage extends Component {
       <div className='root-main'>
         <Grid container>
           <Grid item md={6} xs={12} className='grid-item' id='map'>
-            <GoogleApiWrapper
+            {/* <GoogleApiWrapper
               pois={pois}
               poi={clickedPoi}
               markerChanged={this.markerChanged}
-            />
+            /> */}
           </Grid>
 
           <Grid item md={6} xs={12} className='grid-item' id='desc'>
@@ -121,10 +125,18 @@ class MainPage extends Component {
         </Grid>
 
         <GridList className='gridList'>
-          <PoiGridListTile pois={pois} handleClickOnPoi={this.handleClickOnPoi} />
+          <PoiGridListTile pois={pois} clickedPoi={clickedPoi} handleClickOnPoi={this.handleClickOnPoi} />
         </GridList>
         <Grid container>
-          <div>This is 3</div>
+          <Grid item md={4} xs={12} className='grid-item' id='news'>
+            <NewsFeed />
+          </Grid>
+          <Grid item md={4} xs={12} className='grid-item' id='comments'>
+            <CommentsLikes />
+          </Grid>
+          <Grid item md={4} xs={12} className='grid-item' id='friends'>
+            <Friends />
+          </Grid>
         </Grid>
       </div>
     )

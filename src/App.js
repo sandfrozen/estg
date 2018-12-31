@@ -12,8 +12,8 @@ import MainPage from './components/MainPage'
 import Login from './components/Login'
 import NotFound from './components/NotFound.js'
 import User from './components/User/index.js'
-import Poi from './components/Poi/Poi.js';
-import NewPoi from './components/NewPoi/NewPoi.js';
+import Poi from './components/MainPage/PoiInfo/Poi/Poi.js';
+import PoiManager from './components/PoiManager/PoiManager.js';
 import Pois from './components/Pois/Pois.js';
 import PoiRoutes from './components/PoiRoutes/PoiRoutes.js';
 import ButtonsBar from './components/ButtonsBar/ButtonsBar.js';
@@ -27,10 +27,10 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={MainPage} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/user/:id/:name' component={User} />
-              <Route exact path='/poi/:id/:title' component={Poi} />
-              <Route exact path='/poi-new' component={NewPoi} />
-              <Route exact path='/poi-edit/:id' component={NewPoi} />
+              <Route exact path='/user/:name_and_id' component={User} />
+              <Route exact path='/poi/:title_and_id' component={Poi} />
+              <Route exact path='/new-poi' component={PoiManager} />
+              <Route exact path='/edit-poi/:id' component={PoiManager} />
               <Route exact path='/pois' component={Pois} />
               <Route exact path='/routes' component={PoiRoutes} />
               <Route component={NotFound} />

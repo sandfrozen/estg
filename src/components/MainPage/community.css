@@ -1,0 +1,62 @@
+.community-headline {
+  padding: 8px;
+  border-bottom: 1px dotted lightgray;
+  font-size: 1.3em;
+}
+
+.sec-headline {
+  border-top: 4px solid rgba(95, 99, 109, 0.33);
+}
+
+.community-cl {
+  height: 50%;
+}
+
+.community-likes {
+  height: calc(100% - 44px);
+  /* 37 + 16 */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.community-comments {
+  height: calc(100% - 48px);
+  /* 37 + 16 */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.community-date {
+  /* padding-left: 8px; */
+  font-size: 0.7em;
+  color: gray;
+}
+
+.like-fragment {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+img.community-image {
+  width: 30px;
+  height: 30px;
+  margin: auto 5px;
+}
+
+p.community-like {
+  padding: 8px;
+  margin: 0;
+}
+
+.community-comment {
+  font-size: 0.8em;
+}
+
+.community-like > a {
+  color: black;
+}
+
+.community-headline > a {
+  font-size: 0.6em;
+}

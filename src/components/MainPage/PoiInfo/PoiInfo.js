@@ -33,7 +33,7 @@ class PoiInfo extends Component {
           </div>
           <div className='poi_title'>{poi.title}</div>
           <div className='poi_desc'>{poi.description}</div>
-          <Button color='primary' component={Link} to={`/poi/${poi.poiId}/${poi.title.split(' ').join('-')}`}>Show more</Button>
+          <Button color='primary' component={Link} to={`/poi/${poi.title.split(' ').join('-')}-${poi.poiId}`}>Show more</Button>
         </div>
       )
     }

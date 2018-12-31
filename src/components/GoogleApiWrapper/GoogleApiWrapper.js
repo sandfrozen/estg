@@ -89,7 +89,7 @@ export class MapContainer extends Component {
 
 const LoadingContainer = props => (
   <Paper>
-    <div style={{ flexGrow: 1 }}>
+    <div style={{ flexGrow: 1, padding: 16 }}>
       Map is loading...
       <LinearProgress />
     </div>

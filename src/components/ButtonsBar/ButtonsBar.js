@@ -10,12 +10,19 @@ const ButtonsBar = () => {
       {({ user, logout }) => (
         <div className='buttons-bar'>
           {user && (
-            <Button color='primary' component={Link} to={`/user/${user.id}/${user.name}`}>
+            <Button
+              color='primary'
+              component={Link}
+              to={`/user/${user.name.split(' ').join('-')}-${user.id}`}
+            >
               My Account
             </Button>
           )}
-          <Button color='primary' component={Link} to={`/poi-new`}>
+          <Button color='primary' component={Link} to={`/new-poi`}>
             Add new POI
+          </Button>
+          <Button color='primary' component={Link} to={'/edit-poi'}>
+            Edit POI
           </Button>
           <Button color='primary' component={Link} to={`/pois`}>
             All POIs
