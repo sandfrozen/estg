@@ -20,23 +20,24 @@ const mapContainer = {
 export class MapContainer extends Component {
 
   state = {
-    poi: null
+    clickedUserPoi: null
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(nextProps.clickedUserPoi)
     this.setState({
-      poi: nextProps.poi
+      clickedUserPoi: nextProps.clickedUserPoi
     })
   }
 
-  onMarkerClick = poi => e => {
-    this.props.markerChanged(poi)
-    this.setState({ poi })
+  onMarkerClick = clickedUserPoi => e => {
+    this.props.markerChanged(clickedUserPoi)
+    this.setState({ clickedUserPoi })
   }
 
   render () {
     const publicUsersPois = this.props.publicUsersPois
-    const poi = this.state.poi
+    const clickedUserPoi = this.state.clickedUserPoi
     // let pois = []
     // if (poi) {
     //   poiz.forEach(p => {
@@ -74,10 +75,10 @@ export class MapContainer extends Component {
         }}
       >
         {publicUsersPois && markers}
-        {poi && (
-          <InfoWindow visible position={{ lat: poi.latitude, lng: poi.longitude }}>
+        {clickedUserPoi && (
+          <InfoWindow visible position={{ lat: clickedUserPoi.poi.latitude, lng: clickedUserPoi.poi.longitude }}>
             <div>
-              <h3>{poi.title}</h3>
+              <h3>{clickedUserPoi.poi.title}</h3>
             </div>
           </InfoWindow>
         )}

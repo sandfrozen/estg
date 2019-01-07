@@ -60,16 +60,16 @@ class MainPage extends Component {
           <div className='root-main'>
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
-                {/* <GoogleApiWrapper
+                <GoogleApiWrapper
                   publicUsersPois={publicUsersPois}
-                  userPoi={clickedUserPoi}
+                  clickedUserPoi={clickedUserPoi}
                   markerChanged={this.markerChanged}
-                /> */}
+                />
               </Grid>
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo userPoi={clickedUserPoi} />
+                  <PoiInfo clickedUserPoi={clickedUserPoi} />
                 </Paper>
               </Grid>
             </Grid>

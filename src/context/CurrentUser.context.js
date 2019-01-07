@@ -40,7 +40,6 @@ export class CurrentUserProvider extends Component {
     })
       .then(result => result.json())
       .then(user => {
-        console.log('user', user)
         this.setState(
           {
             user: user,

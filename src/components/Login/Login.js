@@ -29,6 +29,7 @@ class Login extends Component {
     mail: 'admin.tomek@gmail.com',
     password: 'admintomek',
     loginable: false,
+    loginPressed: false,
     registerable: false,
     usedMails: []
   }
@@ -57,6 +58,10 @@ class Login extends Component {
     )
   }
 
+  handleDelete = () => {
+    this.setState({ loginPressed: false})
+  }
+
   checkLoginable = () => {
     const { mail, password } = this.state
     const mailFormat = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(mail)
@@ -66,7 +71,7 @@ class Login extends Component {
 
   render () {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { tab, usedMails, loginable } = this.state
+    const { tab, usedMails, loginable, loginPressed } = this.state
     return (
       <Paper elevation={1} className='login-paper'>
         <AppBar position='static'>
@@ -82,11 +87,20 @@ class Login extends Component {
                 <div>
                   {user && <Redirect to={from} />}
                   <p>Login to view page {from.pathname}</p>
-                  {processing ? (
+                  {processing && (
                     <Fragment>
                       <Loading />
                     </Fragment>
-                  ) : (
+                  )}
+                  {loginPressed && !processing && (
+                    <Chip
+
+                      label='Login error. Try again.'
+                      color='primary'
+                      onDelete={this.handleDelete}
+                    />
+                  )}
+                  {!processing && (
                     <form noValidate autoComplete='off' className='login-form'>
                       <TextField
                         id='mail'
@@ -106,9 +120,10 @@ class Login extends Component {
                         variant='outlined'
                       />
                       <Button
-                        onClick={() =>
+                        onClick={() => {
+                          this.setState({ loginPressed: true })
                           login(this.state.mail, this.state.password)
-                        }
+                        }}
                         disabled={!loginable}
                         variant='contained'
                         color='primary'
@@ -125,7 +140,11 @@ class Login extends Component {
         {tab === 1 && (
           <TabContainer>
             <Formik
-              initialValues={{ name: 'Tomek B', mail: 'tombs@wp.pl', password: 'asdasd' }}
+              initialValues={{
+                name: 'Tomek B',
+                mail: 'tombs@wp.pl',
+                password: 'asdasd'
+              }}
               validate={values => {
                 let errors = {}
                 if (!values.mail) {
@@ -156,7 +175,9 @@ class Login extends Component {
               }}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                  {/* alert(JSON.stringify(values, null, 2)) */}
+                  {
+                    /* alert(JSON.stringify(values, null, 2)) */
+                  }
                   setSubmitting(false)
                 }, 400)
               }}
@@ -170,80 +191,84 @@ class Login extends Component {
                 handleSubmit,
                 isSubmitting
                 /* and other goodies */
-              }) => !isSubmitting ? (
-                <form onSubmit={handleSubmit} className='login-form'>
-                  <TextField
-                    name='name'
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label='Name'
-                    margin='normal'
-                    variant='outlined'
-                  />
-                  {errors.name && touched.name && (
-                    <Fragment>
-                      <Chip
-                        label={errors.name}
-                        color='secondary'
-                        variant='outlined'
-                      />
-                      <br />
-                      <br />
-                    </Fragment>
-                  )}
-                  <TextField
-                    type='mail'
-                    name='mail'
-                    value={values.mail}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label='Mail'
-                    margin='normal'
-                    variant='outlined'
-                  />
-                  {errors.mail && touched.mail && (
-                    <Fragment>
-                      <Chip
-                        label={errors.mail}
-                        color='secondary'
-                        variant='outlined'
-                      />
-                      <br />
-                      <br />
-                    </Fragment>
-                  )}
-                  <TextField
-                    type='password'
-                    name='password'
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label='Password'
-                    margin='normal'
-                    variant='outlined'
-                  />
-                  {errors.password && touched.password && (
-                    <Fragment>
-                      <Chip
-                        label={errors.password}
-                        color='secondary'
-                        variant='outlined'
-                      />
-                      <br />
-                      <br />
-                    </Fragment>
-                  )}
-                  <Button
-                    type='submit'
-                    variant='contained'
-                    color='primary'
-                    disabled={!this.state.registerable}
-                  >
-                    Register
-                  </Button>
-                </form>
-              ) : <Loading />}
+              }) =>
+                !isSubmitting ? (
+                  <form onSubmit={handleSubmit} className='login-form'>
+                    <TextField
+                      name='name'
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      label='Name'
+                      margin='normal'
+                      variant='outlined'
+                    />
+                    {errors.name && touched.name && (
+                      <Fragment>
+                        <Chip
+                          label={errors.name}
+                          color='secondary'
+                          variant='outlined'
+                        />
+                        <br />
+                        <br />
+                      </Fragment>
+                    )}
+                    <TextField
+                      type='mail'
+                      name='mail'
+                      value={values.mail}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      label='Mail'
+                      margin='normal'
+                      variant='outlined'
+                    />
+                    {errors.mail && touched.mail && (
+                      <Fragment>
+                        <Chip
+                          label={errors.mail}
+                          color='secondary'
+                          variant='outlined'
+                        />
+                        <br />
+                        <br />
+                      </Fragment>
+                    )}
+                    <TextField
+                      type='password'
+                      name='password'
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      label='Password'
+                      margin='normal'
+                      variant='outlined'
+                    />
+                    {errors.password && touched.password && (
+                      <Fragment>
+                        <Chip
+                          label={errors.password}
+                          color='secondary'
+                          variant='outlined'
+                        />
+                        <br />
+                        <br />
+                      </Fragment>
+                    )}
+                    <Button
+                      type='submit'
+                      variant='contained'
+                      color='primary'
+                      disabled={!this.state.registerable}
+                    >
+                      Register
+                    </Button>
+                  </form>
+                ) : (
+                  <Loading />
+                )
+              }
             </Formik>
           </TabContainer>
         )}

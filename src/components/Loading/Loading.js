@@ -15,7 +15,7 @@ const styles = {
 class Loading extends React.Component {
   render () {
     const { classes } = this.props
-    const text = this.props.text || 'Loading..'
+    const text = this.props.text || 'Loading...'
     return (
       <div className={classes.root}>
         {text}
