@@ -44,9 +44,9 @@ class Navbar extends Component {
                     <Button
                       color='inherit'
                       component={Link}
-                      to={`/user/${user.name.split(' ').join('-')}-${user.id}`}
+                      to={`/user/${user.name.split(' ').join('-')}-${user.userID}`}
                     >
-                      {user.name} <AccountCircle />
+                      {user.name}&nbsp;<AccountCircle />
                     </Button>
                     <Button color='inherit' onClick={logout}>
                       Logout

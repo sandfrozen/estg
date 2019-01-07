@@ -13,7 +13,7 @@ import { Formik } from 'formik'
 import Chip from '@material-ui/core/Chip'
 import * as _ from 'ramda'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import Loading from '../Loading/Loading';
+import Loading from '../Loading/Loading'
 
 function TabContainer (props) {
   return (
@@ -26,8 +26,8 @@ function TabContainer (props) {
 class Login extends Component {
   state = {
     tab: 0,
-    email: 'tombs@wp.pl',
-    password: 'password',
+    email: 'admin.tomek@gmail.com',
+    password: 'admintomek',
     newname: '',
     newemail: '',
     newpassword: '',
@@ -55,22 +55,19 @@ class Login extends Component {
             <Tab label='New Account' />
           </Tabs>
         </AppBar>
-        {tab === 0 &&
+        {tab === 0 && (
           <TabContainer>
             <CurrentUserConsumer>
               {({ user, login, processing }) => (
                 <div>
                   {user && <Redirect to={from} />}
                   <p>Login to view page {from.pathname}</p>
-                  {processing
-                    ? <Fragment>
+                  {processing ? (
+                    <Fragment>
                       <Loading />
                     </Fragment>
-                    : <form
-                      noValidate
-                      autoComplete='off'
-                      className='login-form'
-                      >
+                  ) : (
+                    <form noValidate autoComplete='off' className='login-form'>
                       <TextField
                         id='email'
                         label='Email'
@@ -78,7 +75,7 @@ class Login extends Component {
                         onChange={this.handleChange('email')}
                         margin='normal'
                         variant='outlined'
-                        />
+                      />
                       <TextField
                         id='password'
                         label='Password'
@@ -87,20 +84,24 @@ class Login extends Component {
                         onChange={this.handleChange('password')}
                         margin='normal'
                         variant='outlined'
-                        />
+                      />
                       <Button
-                        onClick={login}
+                        onClick={() =>
+                          login(this.state.email, this.state.password)
+                        }
                         variant='contained'
                         color='primary'
-                        >
-                          Login
-                        </Button>
-                    </form>}
+                      >
+                        Login
+                      </Button>
+                    </form>
+                  )}
                 </div>
               )}
             </CurrentUserConsumer>
-          </TabContainer>}
-        {tab === 1 &&
+          </TabContainer>
+        )}
+        {tab === 1 && (
           <TabContainer>
             <Formik
               initialValues={{ name: '', email: '', password: '' }}
@@ -156,8 +157,7 @@ class Login extends Component {
                     margin='normal'
                     variant='outlined'
                   />
-                  {errors.name &&
-                    touched.name &&
+                  {errors.name && touched.name && (
                     <Fragment>
                       <Chip
                         label={errors.name}
@@ -166,7 +166,8 @@ class Login extends Component {
                       />
                       <br />
                       <br />
-                    </Fragment>}
+                    </Fragment>
+                  )}
                   <TextField
                     type='email'
                     name='email'
@@ -176,8 +177,7 @@ class Login extends Component {
                     margin='normal'
                     variant='outlined'
                   />
-                  {errors.email &&
-                    touched.email &&
+                  {errors.email && touched.email && (
                     <Fragment>
                       <Chip
                         label={errors.email}
@@ -186,7 +186,8 @@ class Login extends Component {
                       />
                       <br />
                       <br />
-                    </Fragment>}
+                    </Fragment>
+                  )}
                   <TextField
                     type='password'
                     name='password'
@@ -196,8 +197,7 @@ class Login extends Component {
                     margin='normal'
                     variant='outlined'
                   />
-                  {errors.password &&
-                    touched.password &&
+                  {errors.password && touched.password && (
                     <Fragment>
                       <Chip
                         label={errors.password}
@@ -206,7 +206,8 @@ class Login extends Component {
                       />
                       <br />
                       <br />
-                    </Fragment>}
+                    </Fragment>
+                  )}
                   <Button
                     type='submit'
                     variant='contained'
@@ -217,7 +218,8 @@ class Login extends Component {
                 </form>
               )}
             </Formik>
-          </TabContainer>}
+          </TabContainer>
+        )}
       </Paper>
     )
   }

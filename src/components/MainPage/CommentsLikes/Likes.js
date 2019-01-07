@@ -14,7 +14,6 @@ class Likes extends Component {
   }
 
   fetchLikesForUser = async () => {
-    console.log('likeff', this.props.userId)
     await fetch(
       `https://localhost:5001/api/likes/forUser/${this.props.userId}`
     )

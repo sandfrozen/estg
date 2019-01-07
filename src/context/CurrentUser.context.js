@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+const axios = require('axios')
 
 const CurrentUserContext = React.createContext()
 
@@ -25,39 +26,49 @@ export class CurrentUserProvider extends Component {
     }
   }
 
-  getUser = () => {
-    this.setState(
-      {
-        user: { id: 1, name: 'Admin Tomek' },
-        processing: false,
-        redirecting: true
+  getUser = async (mail, password) => {
+    await fetch('https://localhost:5001/api/auth', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, cors, *same-origin
+      headers: {
+        'Content-Type': 'application/json'
       },
-      () => localStorage.setItem('user', JSON.stringify(this.state.user))
-    )
-    // window.FB.api('/me', user => {
-    //   this.setState({
-    //     user,
-    //     processing: false,
-    //     redirecting: true
-    //   })
-    // })
+      body: JSON.stringify({
+        mail: mail,
+        password: password
+      }) // body data type must match "Content-Type" header
+    })
+      .then(result => result.json())
+      .then(user => {
+        console.log('user', user)
+        this.setState(
+          {
+            user: user,
+            processing: false,
+            redirecting: true
+          },
+          () => {
+            localStorage.setItem('user', JSON.stringify(user))
+          }
+        )
+      })
+      .catch(() => {
+        this.setState(
+          {
+            user: null,
+            processing: false,
+            redirecting: false
+          },
+          () => localStorage.clear('user')
+        )
+      })
   }
 
-  login = () => {
+  login = (mail, password) => {
     this.setState({ processing: true })
     setTimeout(() => {
-      this.getUser()
-    }, 1000)
-
-    // window.FB.getLoginStatus(response => {
-    //   if (response.status !== 'connected') {
-    //     this.getUser()
-    //   } else {
-    //     window.FB.login(user => {
-    //       this.getUser()
-    //     })
-    //   }
-    // })
+      this.getUser(mail, password)
+    }, 300)
   }
 
   logout = () => {

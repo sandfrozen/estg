@@ -13,7 +13,7 @@ const ButtonsBar = () => {
             <Button
               color='primary'
               component={Link}
-              to={`/user/${user.id}`}
+              to={`/user/${user.userID}`}
             >
               My Account
             </Button>

@@ -33,7 +33,6 @@ class MainPage extends Component {
     await fetch('https://localhost:5001/api/userPois/public')
       .then(response => response.json())
       .then(publicUsersPois => {
-        console.log(publicUsersPois)
         this.setState({ publicUsersPois, fetching: false })
       })
       .catch(() => {
@@ -61,11 +60,11 @@ class MainPage extends Component {
           <div className='root-main'>
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
-                <GoogleApiWrapper
+                {/* <GoogleApiWrapper
                   publicUsersPois={publicUsersPois}
                   userPoi={clickedUserPoi}
                   markerChanged={this.markerChanged}
-                />
+                /> */}
               </Grid>
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>

@@ -41,7 +41,6 @@ class PoiInfo extends Component {
       try {
         imageUrl = userPoi.images[0].url
       } catch {}
-      console.log('userPoi', userPoi)
       return (
         <div className='poi_info' id='poi_info'>
           <div>

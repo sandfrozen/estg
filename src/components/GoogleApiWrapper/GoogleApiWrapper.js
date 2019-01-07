@@ -48,10 +48,8 @@ export class MapContainer extends Component {
     //   pois = poiz
     // }
     let markers = null
-    console.log('pois', publicUsersPois)
     if (publicUsersPois !== null) {
       markers = publicUsersPois.map(p => {
-        console.log(p)
         return (
           <Marker
             key={p.userPoiID}

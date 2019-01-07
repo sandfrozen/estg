@@ -8,7 +8,7 @@ import {
 import Navbar from './components/Navbar'
 import './App.css'
 import MainPage from './components/MainPage/MainPage'
-import Login from './components/Login'
+import Login from './components/Login/Login'
 import NotFound from './components/NotFound.js'
 import User from './components/User/index.js'
 import Poi from './components/MainPage/PoiInfo/Poi/Poi.js'
