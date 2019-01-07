@@ -28,6 +28,7 @@
 
 .my-col {
   /* margin: 0 8px !important; */
+  width: 25%;
   border-radius: 4px !important;
   margin: 0 8px !important;
   padding: 0 !important;

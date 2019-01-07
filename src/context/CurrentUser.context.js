@@ -18,6 +18,8 @@ export class CurrentUserProvider extends Component {
           user: cookieUser
         })
       }
+
+      console.log('context provider did mount', cookieUser)
     } catch (e) {
       console.log('CurrentUserProvider', e)
     }
@@ -26,7 +28,7 @@ export class CurrentUserProvider extends Component {
   getUser = () => {
     this.setState(
       {
-        user: { id: 2, name: 'Tomek B' },
+        user: { id: 1, name: 'Admin Tomek' },
         processing: false,
         redirecting: true
       },

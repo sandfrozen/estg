@@ -13,6 +13,7 @@ import { Formik } from 'formik'
 import Chip from '@material-ui/core/Chip'
 import * as _ from 'ramda'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import Loading from '../Loading/Loading';
 
 function TabContainer (props) {
   return (
@@ -63,8 +64,7 @@ class Login extends Component {
                   <p>Login to view page {from.pathname}</p>
                   {processing
                     ? <Fragment>
-                      <Typography>Authenticating...</Typography>
-                      <LinearProgress />
+                      <Loading />
                     </Fragment>
                     : <form
                       noValidate

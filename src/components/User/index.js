@@ -5,15 +5,13 @@ import getNameAndId from '../../helpers/helpers'
 
 class User extends Component {
   render () {
-    const { name_and_id } = this.props.match.params || { name_and_id: '0' }
+    const { id } = this.props.match.params || { id: '0' }
 
-    if (name_and_id !== '0') {
-      const { name, id } = getNameAndId(name_and_id)
+    if (id !== '0') {
       return (
         <Paper className='paper-w-w'>
           <p>Account info</p>
-          <p>{name}</p>
-          <p>{id}</p>
+          <p>fetching... user id: {id}</p>
         </Paper>
       )
     } else {

@@ -5,3 +5,5 @@ export default function getNameAndId (name_and_id) {
   const name = name_and_id.split('-').join(' ')
   return { name: name, id: id }
 }
+
+export const imagePlaceholder = 'https://via.placeholder.com/800x400/6c915e?text=No+Image'

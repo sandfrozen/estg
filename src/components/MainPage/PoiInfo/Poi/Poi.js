@@ -6,14 +6,12 @@ import getNameAndId from '../../../../helpers/helpers';
 
 class Poi extends Component {
   render () {
-    let { title_and_id } = this.props.match.params || { title_and_id: '0' }
-    const { name: title, id } = getNameAndId(title_and_id)
+    let { id } = this.props.match.params || { id: '0' }
 
     return (
       <Paper className='paper-w-w'>
         This is poi:
-        <p>{title}</p>
-        <p>{id}</p>
+        <p>fetching poi for id: {id}</p>
         <Button
           color='primary'
           component={Link}
