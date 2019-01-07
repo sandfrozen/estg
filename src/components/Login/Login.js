@@ -26,12 +26,22 @@ function TabContainer (props) {
 class Login extends Component {
   state = {
     tab: 0,
-    email: 'admin.tomek@gmail.com',
+    mail: 'admin.tomek@gmail.com',
     password: 'admintomek',
-    newname: '',
-    newemail: '',
-    newpassword: '',
-    registerable: false
+    loginable: false,
+    registerable: false,
+    usedMails: []
+  }
+
+  componentDidMount () {
+    this.fetchUsedMails()
+    this.checkLoginable()
+  }
+
+  fetchUsedMails = async () => {
+    await fetch('https://localhost:5001/api/users/getUsedMails')
+      .then(response => response.json())
+      .then(usedMails => this.setState({ usedMails }))
   }
 
   handleTabChange = (event, tab) => {
@@ -39,14 +49,24 @@ class Login extends Component {
   }
 
   handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
+    this.setState(
+      {
+        [name]: event.target.value
+      },
+      () => this.checkLoginable()
+    )
+  }
+
+  checkLoginable = () => {
+    const { mail, password } = this.state
+    const mailFormat = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(mail)
+    const passwordLength = password.length > 5
+    this.setState({ loginable: mailFormat && passwordLength })
   }
 
   render () {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { tab } = this.state
+    const { tab, usedMails, loginable } = this.state
     return (
       <Paper elevation={1} className='login-paper'>
         <AppBar position='static'>
@@ -69,10 +89,10 @@ class Login extends Component {
                   ) : (
                     <form noValidate autoComplete='off' className='login-form'>
                       <TextField
-                        id='email'
-                        label='Email'
-                        value={this.state.email}
-                        onChange={this.handleChange('email')}
+                        id='mail'
+                        label='Mail'
+                        value={this.state.mail}
+                        onChange={this.handleChange('mail')}
                         margin='normal'
                         variant='outlined'
                       />
@@ -87,8 +107,9 @@ class Login extends Component {
                       />
                       <Button
                         onClick={() =>
-                          login(this.state.email, this.state.password)
+                          login(this.state.mail, this.state.password)
                         }
+                        disabled={!loginable}
                         variant='contained'
                         color='primary'
                       >
@@ -104,15 +125,17 @@ class Login extends Component {
         {tab === 1 && (
           <TabContainer>
             <Formik
-              initialValues={{ name: '', email: '', password: '' }}
+              initialValues={{ name: 'Tomek B', mail: 'tombs@wp.pl', password: 'asdasd' }}
               validate={values => {
                 let errors = {}
-                if (!values.email) {
-                  errors.email = 'Required'
+                if (!values.mail) {
+                  errors.mail = 'Required'
                 } else if (
-                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.mail)
                 ) {
-                  errors.email = 'Invalid email address'
+                  errors.mail = 'Invalid mail address'
+                } else if (usedMails.includes(values.mail)) {
+                  errors.mail = 'Mail address is used'
                 }
 
                 if (values.password.length < 6) {
@@ -133,7 +156,7 @@ class Login extends Component {
               }}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2))
+                  {/* alert(JSON.stringify(values, null, 2)) */}
                   setSubmitting(false)
                 }, 400)
               }}
@@ -147,10 +170,11 @@ class Login extends Component {
                 handleSubmit,
                 isSubmitting
                 /* and other goodies */
-              }) => (
+              }) => !isSubmitting ? (
                 <form onSubmit={handleSubmit} className='login-form'>
                   <TextField
                     name='name'
+                    value={values.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     label='Name'
@@ -169,18 +193,19 @@ class Login extends Component {
                     </Fragment>
                   )}
                   <TextField
-                    type='email'
-                    name='email'
+                    type='mail'
+                    name='mail'
+                    value={values.mail}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    label='Email'
+                    label='Mail'
                     margin='normal'
                     variant='outlined'
                   />
-                  {errors.email && touched.email && (
+                  {errors.mail && touched.mail && (
                     <Fragment>
                       <Chip
-                        label={errors.email}
+                        label={errors.mail}
                         color='secondary'
                         variant='outlined'
                       />
@@ -191,6 +216,7 @@ class Login extends Component {
                   <TextField
                     type='password'
                     name='password'
+                    value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     label='Password'
@@ -211,12 +237,13 @@ class Login extends Component {
                   <Button
                     type='submit'
                     variant='contained'
+                    color='primary'
                     disabled={!this.state.registerable}
                   >
                     Register
                   </Button>
                 </form>
-              )}
+              ) : <Loading />}
             </Formik>
           </TabContainer>
         )}
