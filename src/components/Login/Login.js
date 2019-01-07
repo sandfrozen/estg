@@ -30,6 +30,8 @@ class Login extends Component {
     password: 'admintomek',
     loginable: false,
     loginPressed: false,
+    registerPressed: false,
+    registerFailed: false,
     registerable: false,
     usedMails: []
   }
@@ -59,7 +61,11 @@ class Login extends Component {
   }
 
   handleDelete = () => {
-    this.setState({ loginPressed: false})
+    this.setState({ loginPressed: false })
+  }
+
+  handleRegisterDelete = () => {
+    this.setState({ registerPressed: false })
   }
 
   checkLoginable = () => {
@@ -71,7 +77,14 @@ class Login extends Component {
 
   render () {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { tab, usedMails, loginable, loginPressed } = this.state
+    const {
+      tab,
+      usedMails,
+      loginable,
+      loginPressed,
+      registerPressed,
+      registerFailed
+    } = this.state
     return (
       <Paper elevation={1} className='login-paper'>
         <AppBar position='static'>
@@ -94,7 +107,6 @@ class Login extends Component {
                   )}
                   {loginPressed && !processing && (
                     <Chip
-
                       label='Login error. Try again.'
                       color='primary'
                       onDelete={this.handleDelete}
@@ -139,6 +151,13 @@ class Login extends Component {
         )}
         {tab === 1 && (
           <TabContainer>
+            {registerPressed && registerFailed && (
+              <Chip
+                label='Register error. Try again.'
+                color='primary'
+                onDelete={this.handleRegisterDelete}
+              />
+            )}
             <Formik
               initialValues={{
                 name: 'Tomek B',
@@ -173,13 +192,54 @@ class Login extends Component {
 
                 return errors
               }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  {
-                    /* alert(JSON.stringify(values, null, 2)) */
-                  }
-                  setSubmitting(false)
-                }, 400)
+              onSubmit={async (values, { setSubmitting }) => {
+                setSubmitting(true)
+                this.setState({ registerPressed: true, registerFailed: false })
+                setTimeout(async () => {
+                  await fetch('https://localhost:5001/api/users', {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, cors, *same-origin
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      mail: values.mail,
+                      password: values.password,
+                      name: values.name,
+                      active: true
+                    }) // body data type must match "Content-Type" header
+                  })
+                    .then(result => {
+                      if (result.status === 201) {
+                        // created
+                        return result.json()
+                      } else {
+                        throw new Error()
+                      }
+                    })
+                    .then(r => {
+                      alert(
+                        'Successful register!\nEmail: ' +
+                          values.mail +
+                          '\nTab will switch automatically, press login.'
+                      )
+                      this.setState({
+                        tab: 0,
+                        mail: values.mail,
+                        password: values.password
+                      })
+
+                      values.name = ''
+                      values.mail = ''
+                      values.password = ''
+                    })
+                    .catch(() => {
+                      this.setState({ registerFailed: true })
+                    })
+                    .then(() => {
+                      setSubmitting(false)
+                    })
+                }, 700)
               }}
             >
               {({
