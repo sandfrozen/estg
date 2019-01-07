@@ -30,13 +30,6 @@ class Navbar extends Component {
           <div className='root2'>
             <AppBar position='static' className='dark_yellow'>
               <Toolbar>
-                <IconButton
-                  className='menuButton'
-                  color='inherit'
-                  aria-label='Menu'
-                >
-                  <MenuIcon />
-                </IconButton>
                 <Typography
                   variant='h6'
                   component={Link}

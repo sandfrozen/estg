@@ -30,7 +30,6 @@ class Comments extends Component {
     const { comments, fetching } = this.state
     let divComments = fetching === true ? <Loading /> : 'no comments'
     if (comments !== null && comments.length > 0) {
-      console.log('com', comments)
       divComments = comments.map(comment => (
         <Fragment key={comment.commentID}>
           <div className='like-fragment'>

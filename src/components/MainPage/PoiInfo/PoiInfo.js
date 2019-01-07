@@ -12,9 +12,9 @@ class PoiInfo extends Component {
   }
 
   render () {
-    const { poi } = this.props
+    const { userPoi } = this.props
 
-    if (poi === null) {
+    if (userPoi === null) {
       return (
         <div className='poi_info' id='poi_info'>
           <div>
@@ -39,20 +39,20 @@ class PoiInfo extends Component {
     } else {
       let imageUrl = imagePlaceholder
       try {
-        imageUrl = poi.userPois[0].images[0].url
+        imageUrl = userPoi.images[0].url
       } catch {}
-      console.log('poi', poi)
+      console.log('userPoi', userPoi)
       return (
         <div className='poi_info' id='poi_info'>
           <div>
-            <img className='poi_image' src={imageUrl} alt={poi.title} />
+            <img className='poi_image' src={imageUrl} alt={userPoi.poi.title} />
           </div>
-          <div className='poi_title'>{poi.title}</div>
-          <div className='poi_desc'>{poi.description}</div>
+          <div className='poi_title'>{userPoi.poi.title}</div>
+          <div className='poi_desc'>{userPoi.poi.description}</div>
           <Button
             color='primary'
             component={Link}
-            to={`/poi/${poi.title.split(' ').join('-')}-${poi.poiID}`}
+            to={`/poi/${userPoi.userPoiID}`}
           >
             Show more
           </Button>

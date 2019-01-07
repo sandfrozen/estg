@@ -7,7 +7,8 @@ import './style.css'
 
 const mapStyle = {
   borderRadius: 4,
-  boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)'
+  boxShadow:
+    '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)'
 }
 
 const mapContainer = {
@@ -17,13 +18,9 @@ const mapContainer = {
 }
 
 export class MapContainer extends Component {
-  constructor (props) {
-    super(props)
 
-    this.state = {
-      pois: this.props.pois,
-      poi: this.props.poi
-    }
+  state = {
+    poi: null
   }
 
   componentWillReceiveProps (nextProps) {
@@ -38,7 +35,7 @@ export class MapContainer extends Component {
   }
 
   render () {
-    const pois = this.state.pois
+    const publicUsersPois = this.props.publicUsersPois
     const poi = this.state.poi
     // let pois = []
     // if (poi) {
@@ -50,16 +47,20 @@ export class MapContainer extends Component {
     // } else {
     //   pois = poiz
     // }
-
-    const markers = pois.map(item => {
-      return (
-        <Marker
-          key={item.poiId}
-          position={{ lat: item.lat, lng: item.lng }}
-          onClick={this.onMarkerClick(item)}
-        />
-      )
-    })
+    let markers = null
+    console.log('pois', publicUsersPois)
+    if (publicUsersPois !== null) {
+      markers = publicUsersPois.map(p => {
+        console.log(p)
+        return (
+          <Marker
+            key={p.userPoiID}
+            position={{ lat: p.poi.latitude, lng: p.poi.longitude }}
+            onClick={this.onMarkerClick(p)}
+          />
+        )
+      })
+    }
 
     // const center_to_poi = poi && { lat: poi.lat, lng: poi.lng }
     // center={center_to_poi}
@@ -69,19 +70,19 @@ export class MapContainer extends Component {
         zoom={12}
         containerStyle={mapContainer}
         style={mapStyle}
-        
         initialCenter={{
           lat: 38.706936,
           lng: -9.151234
         }}
       >
-        {pois && markers}
-        {poi &&
-          <InfoWindow visible position={{ lat: poi.lat, lng: poi.lng }}>
+        {publicUsersPois && markers}
+        {poi && (
+          <InfoWindow visible position={{ lat: poi.latitude, lng: poi.longitude }}>
             <div>
               <h3>{poi.title}</h3>
             </div>
-          </InfoWindow>}
+          </InfoWindow>
+        )}
       </Map>
     )
   }

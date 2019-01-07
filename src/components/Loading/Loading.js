@@ -1,55 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 const styles = {
   root: {
     flexGrow: 1,
-    paddingTop: 2
-  },
-};
+    paddingTop: 2,
+    paddingLeft: 16,
+    paddingRight: 16
+  }
+}
 
 class Loading extends React.Component {
-  state = {
-    completed: 0,
-    buffer: 10,
-  };
-
-  componentDidMount() {
-    this.timer = setInterval(this.progress, 500);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  progress = () => {
-    const { completed } = this.state;
-    if (completed > 100) {
-      this.setState({ completed: 0, buffer: 10 });
-    } else {
-      const diff = Math.random() * 10;
-      const diff2 = Math.random() * 10;
-      this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
-    }
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { completed, buffer } = this.state;
+  render () {
+    const { classes } = this.props
     const text = this.props.text || 'Loading..'
     return (
       <div className={classes.root}>
         {text}
-        <LinearProgress variant="buffer" value={completed} valueBuffer={buffer} />
+        <LinearProgress />
       </div>
-    );
+    )
   }
 }
 
 Loading.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(Loading);
+export default withStyles(styles)(Loading)

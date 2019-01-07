@@ -31,7 +31,6 @@ class Likes extends Component {
     const { likes, fetching } = this.state
     let divLikes = fetching === true ? <Loading /> : 'no likes'
     if (likes !== null && likes.length > 0) {
-      console.log('likes', likes)
       divLikes = likes.map(like => (
         <Fragment key={like.likeID}>
           <div className='like-fragment'>

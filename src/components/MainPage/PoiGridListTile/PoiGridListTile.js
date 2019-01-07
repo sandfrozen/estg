@@ -10,26 +10,26 @@ import { imagePlaceholder } from '../../../helpers/helpers'
 import Loading from '../../Loading/Loading';
 
 class PoiGridListTile extends Component {
-  onClick = poi => event => {
-    this.props.handleClickOnPoi(poi)
+  onClick = userPoi => event => {
+    this.props.handleClickOnPoi(userPoi)
   }
   render () {
-    const { pois, clickedPoi } = this.props
-    if (pois !== null && pois.length > 0) {
-      const poisList = pois.map(poi => {
+    const { publicUsersPois, clickedUserPoi } = this.props
+    if (publicUsersPois !== null && publicUsersPois.length > 0) {
+      const poisList = publicUsersPois.map(up => {
         // const poiClassColor = clickedPoi === poi ? 'bw' : 'color'
-        const poiClassShadow = clickedPoi === poi ? 'no-shadow' : 'shadow'
+        const poiClassShadow = clickedUserPoi === up ? 'no-shadow' : 'shadow'
         let imageUrl = imagePlaceholder
         try {
-          imageUrl = poi.userPois[0].images[0].url
+          imageUrl = up.images[0].url
         } catch {}
 
         return (
-          <Fragment key={poi.poiID}>
-            <GridListTile className='my-col' onClick={this.onClick(poi)}>
-              <img src={imageUrl} alt={poi.title} />
+          <Fragment key={up.userPoiID}>
+            <GridListTile className='my-col' onClick={this.onClick(up)}>
+              <img src={imageUrl} alt={up.poi.title} />
               <GridListTileBar
-                title={poi.title}
+                title={up.poi.title}
                 className='titleBar'
                 actionIcon={
                   <IconButton>

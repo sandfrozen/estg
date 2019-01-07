@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
-import './style.css'
-import './community.css'
 import GridList from '@material-ui/core/GridList'
 import Paper from '@material-ui/core/Paper'
+import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
 import PoiInfo from './PoiInfo/PoiInfo'
 import PoiGridListTile from './PoiGridListTile/PoiGridListTile'
 import NewsFeed from './NewsFeed/NewsFeed'
 import Friends from './Friends/Friends'
 import { CurrentUserConsumer } from '../../context/CurrentUser.context'
-import CommentsLikesContainer from './CommentsLikes/CommentsLikesContainer';
+import CommentsLikesContainer from './CommentsLikes/CommentsLikesContainer'
+import './style.css'
+import './community.css'
 
 class MainPage extends Component {
   state = {
@@ -18,9 +19,9 @@ class MainPage extends Component {
       lng: -9.132729
     },
     zoom: 11,
-    clickedPoi: null,
+    clickedUserPoi: null,
     mapSize: 6,
-    pois: null,
+    publicUsersPois: null,
     fetching: true
   }
 
@@ -29,10 +30,11 @@ class MainPage extends Component {
   }
 
   fetchPois = async () => {
-    await fetch('https://localhost:5001/api/pois')
+    await fetch('https://localhost:5001/api/userPois/public')
       .then(response => response.json())
-      .then(pois => {
-        this.setState({ pois, fetching: false })
+      .then(publicUsersPois => {
+        console.log(publicUsersPois)
+        this.setState({ publicUsersPois, fetching: false })
       })
       .catch(() => {
         this.setState({ fetching: false })
@@ -40,43 +42,43 @@ class MainPage extends Component {
   }
 
   markerChanged = poi => {
-    this.setState({ clickedPoi: poi })
+    this.setState({ clickedUserPoi: poi })
   }
 
   handleMap = () => {
     // this.setState({ mapSize: 9 })
   }
 
-  handleClickOnPoi = clickedPoi => {
-    this.setState({ clickedPoi })
+  handleClickOnPoi = clickedUserPoi => {
+    this.setState({ clickedUserPoi })
   }
 
   render () {
-    const { clickedPoi, pois } = this.state
+    const { clickedUserPoi, publicUsersPois } = this.state
     return (
       <CurrentUserConsumer>
         {({ user }) => (
           <div className='root-main'>
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
-                {/* <GoogleApiWrapper
-              pois={pois}
-              poi={clickedPoi}
-              markerChanged={this.markerChanged}
-            /> */}
+                <GoogleApiWrapper
+                  publicUsersPois={publicUsersPois}
+                  userPoi={clickedUserPoi}
+                  markerChanged={this.markerChanged}
+                />
               </Grid>
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo poi={clickedPoi} />
+                  <PoiInfo userPoi={clickedUserPoi} />
                 </Paper>
               </Grid>
             </Grid>
 
             <GridList className='gridList'>
               <PoiGridListTile
-                pois={pois}
-                clickedPoi={clickedPoi}
+                publicUsersPois={publicUsersPois}
+                clickedUserPoi={clickedUserPoi}
                 handleClickOnPoi={this.handleClickOnPoi}
                 fetching={this.state.fetching}
               />
