@@ -3,11 +3,11 @@ import React, { Component, Fragment } from 'react'
 import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
+import InfoIcon from '@material-ui/icons/Info'
 
 import './style.css'
 import { imagePlaceholder } from '../../../helpers/helpers'
-import Loading from '../../Loading/Loading';
+import Loading from '../../Loading/Loading'
 
 class PoiGridListTile extends Component {
   onClick = userPoi => event => {
@@ -30,10 +30,11 @@ class PoiGridListTile extends Component {
               <img src={imageUrl} alt={up.poi.title} />
               <GridListTileBar
                 title={up.poi.title}
+                subtitle={<span>by: {up.user.name}</span>}
                 className='titleBar'
                 actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className='title' />
+                  <IconButton className='icon'>
+                    <InfoIcon />
                   </IconButton>
                 }
               />
@@ -44,7 +45,7 @@ class PoiGridListTile extends Component {
       })
       return <Fragment>{poisList}</Fragment>
     } else {
-      return this.props.fetching === true ? <Loading /> : 'no images'
+      return this.props.fetching === true ? <Loading text='Loading POIs...'/> : 'Cannot load POIs.'
     }
   }
 }
