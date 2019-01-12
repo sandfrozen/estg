@@ -1,5 +1,5 @@
 import { KEY } from '../../secrets/googleMapsApi'
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'

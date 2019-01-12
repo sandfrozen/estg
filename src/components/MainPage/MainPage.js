@@ -22,7 +22,8 @@ class MainPage extends Component {
     clickedUserPoi: null,
     mapSize: 6,
     publicUsersPois: null,
-    fetching: true
+    fetching: true,
+    fetchingError: ''
   }
 
   componentDidMount () {
@@ -33,11 +34,16 @@ class MainPage extends Component {
     await fetch('https://localhost:5001/api/userPois/public')
       .then(response => response.json())
       .then(publicUsersPois => {
-        this.setState({ publicUsersPois, fetching: false })
+        this.setState({ publicUsersPois, fetching: false, fetchingError: '' })
       })
-      .catch(() => {
-        this.setState({ fetching: false })
+      .catch((e) => {
+        console.log(e)
+        this.setState({ fetching: false, fetchingError: e.message })
       })
+  }
+
+  showLisbon = () => {
+    this.setState({ clickedUserPoi: null })
   }
 
   markerChanged = poi => {
@@ -69,7 +75,7 @@ class MainPage extends Component {
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo clickedUserPoi={clickedUserPoi} />
+                  <PoiInfo clickedUserPoi={clickedUserPoi} showLisbon={this.showLisbon}/>
                 </Paper>
               </Grid>
             </Grid>
@@ -80,6 +86,7 @@ class MainPage extends Component {
                 clickedUserPoi={clickedUserPoi}
                 handleClickOnPoi={this.handleClickOnPoi}
                 fetching={this.state.fetching}
+                fetchingError={this.state.fetchingError}
               />
             </GridList>
             <Grid container>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Typography } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 import './style.css'
@@ -9,6 +9,10 @@ class PoiInfo extends Component {
   componentDidUpdate () {
     var poi = document.getElementById('poi_info')
     poi.scrollTop = poi.scrollHeight - poi.offsetHeight
+  }
+
+  _showLisbon = () => {
+    this.props.showLisbon()
   }
 
   render () {
@@ -54,6 +58,11 @@ class PoiInfo extends Component {
             to={`/poi/${clickedUserPoi.userPoiID}`}
           >
             Show more
+          </Button>
+          <Button
+            onClick={this._showLisbon}
+          >
+            Lisbon info
           </Button>
         </div>
       )

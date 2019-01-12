@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-const axios = require('axios')
 
 const CurrentUserContext = React.createContext()
 
@@ -7,7 +6,8 @@ export class CurrentUserProvider extends Component {
   state = {
     user: null,
     processing: false,
-    redirecting: false
+    redirecting: false,
+    loginError: ''
   }
 
   componentDidMount () {
@@ -20,9 +20,9 @@ export class CurrentUserProvider extends Component {
         })
       }
 
-      console.log('context provider did mount', cookieUser)
+      console.log('context provider did mount - after', cookieUser)
     } catch (e) {
-      console.log('CurrentUserProvider', e)
+      console.log('context provider did mount - after error: ', e)
     }
   }
 
@@ -38,25 +38,35 @@ export class CurrentUserProvider extends Component {
         password: password
       }) // body data type must match "Content-Type" header
     })
-      .then(result => result.json())
+      .then(result => {
+        console.log(result)
+        if(result.status !== 200) {
+          throw new Error('Incorrect values.')
+        }
+        return result.json()
+      })
       .then(user => {
+        console.log(user)
         this.setState(
           {
             user: user,
             processing: false,
-            redirecting: true
+            redirecting: true,
+            loginError: ''
           },
           () => {
             localStorage.setItem('user', JSON.stringify(user))
           }
         )
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log('conumer login error', e)
         this.setState(
           {
             user: null,
             processing: false,
-            redirecting: false
+            redirecting: false,
+            loginError: e.message
           },
           () => localStorage.clear('user')
         )
@@ -71,7 +81,7 @@ export class CurrentUserProvider extends Component {
   }
 
   logout = () => {
-    this.setState({ user: null }, () => localStorage.setItem('user', null))
+    this.setState({ user: null, loginError: '' }, () => localStorage.setItem('user', null))
   }
 
   render () {
@@ -82,7 +92,8 @@ export class CurrentUserProvider extends Component {
           login: this.login,
           logout: this.logout,
           user: this.state.user,
-          processing: this.state.processing
+          processing: this.state.processing,
+          loginError: this.state.loginError
         }}
       >
         {children}

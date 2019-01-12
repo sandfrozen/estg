@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import { Paper, Divider } from '@material-ui/core'
+import React, { Component } from 'react'
+import { Paper } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { CurrentUserConsumer } from '../../../context/CurrentUser.context'
 import Likes from './Likes'
 import Comments from './Comments'
 

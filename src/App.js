@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import {
-  CurrentUserProvider,
-  CurrentUserConsumer
-} from './context/CurrentUser.context.js'
+import { CurrentUserProvider } from './context/CurrentUser.context.js'
 import Navbar from './components/Navbar'
 import './App.css'
 import MainPage from './components/MainPage/MainPage'
 import Login from './components/Login/Login'
 import NotFound from './components/NotFound.js'
 import User from './components/User/index.js'
-import Poi from './components/MainPage/PoiInfo/Poi/Poi.js'
+import Poi from './components/Poi/Poi.js'
 import PoiManager from './components/PoiManager/PoiManager.js'
 import Pois from './components/Pois/Pois.js'
 import PoiRoutes from './components/PoiRoutes/PoiRoutes.js'

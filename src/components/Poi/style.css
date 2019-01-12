@@ -1,0 +1,10 @@
+.c_image {
+  height: 255px;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  object-fit: contain;
+  height: 50vh;
+  /* object-position: 0 20%; */
+  background: #fafafa !important;
+}

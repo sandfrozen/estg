@@ -33,3 +33,19 @@ body {
   margin: 24px auto;
   padding: 24px;
 }
+
+.center_text {
+  text-align: center;
+}
+
+.space {
+  padding-bottom: 16px;
+}
+
+.visible_div {
+  display: block;
+}
+
+.hidden_div {
+  display: none;
+}

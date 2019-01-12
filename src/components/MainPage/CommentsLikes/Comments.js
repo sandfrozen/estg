@@ -30,7 +30,10 @@ class Comments extends Component {
     const { comments, fetching } = this.state
     let divComments = fetching === true ? <Loading /> : 'no comments'
     if (comments !== null && comments.length > 0) {
-      divComments = comments.map(comment => (
+      divComments = comments.map(comment => {
+        const date = new Date(comment.dateCreated)
+        const formattedDate = date.getDate() + '.' + date.getMonth()+1 + '.' + date.getFullYear() + ' at ' + date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0')
+        return(
         <Fragment key={comment.commentID}>
           <div className='like-fragment'>
             <img
@@ -39,7 +42,7 @@ class Comments extends Component {
               alt='poi'
             />
             <p className='community-like'>
-              <span className='community-date'>{comment.dateCreated}</span>
+              <span className='community-date'>{formattedDate}</span>
               <br />
               <Link
                 to={`/user/${comment.userID}`}
@@ -59,7 +62,7 @@ class Comments extends Component {
           </div>
           <Divider />
         </Fragment>
-      ))
+      )})
     }
 
     return <div>{divComments}</div>

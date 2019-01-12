@@ -8,8 +8,13 @@ import InfoIcon from '@material-ui/icons/Info'
 import './style.css'
 import { imagePlaceholder } from '../../../helpers/helpers'
 import Loading from '../../Loading/Loading'
+import { Link } from 'react-router-dom'
 
 class PoiGridListTile extends Component {
+  userPoiInfoIconClick = () => {
+    console.log('userPoiInfoIconClick')
+  }
+
   onClick = userPoi => event => {
     this.props.handleClickOnPoi(userPoi)
   }
@@ -23,7 +28,8 @@ class PoiGridListTile extends Component {
         try {
           imageUrl = up.images[0].url
         } catch {}
-
+        const link = '/poi/'+up.userPoiID
+        const MyLink = <Link to={link}/>
         return (
           <Fragment key={up.userPoiID}>
             <GridListTile className='my-col' onClick={this.onClick(up)}>
@@ -33,7 +39,9 @@ class PoiGridListTile extends Component {
                 subtitle={<span>by: {up.user.name}</span>}
                 className='titleBar'
                 actionIcon={
-                  <IconButton className='icon'>
+                  <IconButton
+                    className='icon'
+                  >
                     <InfoIcon />
                   </IconButton>
                 }
@@ -45,7 +53,11 @@ class PoiGridListTile extends Component {
       })
       return <Fragment>{poisList}</Fragment>
     } else {
-      return this.props.fetching === true ? <Loading text='Loading POIs...'/> : 'Cannot load POIs.'
+      return this.props.fetching === true ? (
+        <Loading text='Loading POIs...' />
+      ) : (
+        'Can not load POIs: ' + this.props.fetchingError
+      )
     }
   }
 }

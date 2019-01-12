@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/Paper'
 import { Formik } from 'formik'
 import Chip from '@material-ui/core/Chip'
 import * as _ from 'ramda'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import Loading from '../Loading/Loading'
 
 function TabContainer (props) {
@@ -32,13 +31,17 @@ class Login extends Component {
     loginPressed: false,
     registerPressed: false,
     registerFailed: false,
+    registerError: '',
     registerable: false,
     usedMails: []
   }
 
   componentDidMount () {
     this.fetchUsedMails()
-    this.checkLoginable()
+    setTimeout(() => {
+      this.checkLoginable()
+    }, 100)
+    
   }
 
   fetchUsedMails = async () => {
@@ -83,7 +86,8 @@ class Login extends Component {
       loginable,
       loginPressed,
       registerPressed,
-      registerFailed
+      registerFailed,
+      registerError
     } = this.state
     return (
       <Paper elevation={1} className='login-paper'>
@@ -96,7 +100,7 @@ class Login extends Component {
         {tab === 0 && (
           <TabContainer>
             <CurrentUserConsumer>
-              {({ user, login, processing }) => (
+              {({ user, login, processing, loginError }) => (
                 <div>
                   {user && <Redirect to={from} />}
                   <p>Login to view page {from.pathname}</p>
@@ -107,7 +111,7 @@ class Login extends Component {
                   )}
                   {loginPressed && !processing && (
                     <Chip
-                      label='Login error. Try again.'
+                      label={`Error: ${loginError}`}
                       color='primary'
                       onDelete={this.handleDelete}
                     />
@@ -153,7 +157,7 @@ class Login extends Component {
           <TabContainer>
             {registerPressed && registerFailed && (
               <Chip
-                label='Register error. Try again.'
+                label={`Error: ${registerError}`}
                 color='primary'
                 onDelete={this.handleRegisterDelete}
               />
@@ -194,7 +198,7 @@ class Login extends Component {
               }}
               onSubmit={async (values, { setSubmitting }) => {
                 setSubmitting(true)
-                this.setState({ registerPressed: true, registerFailed: false })
+                this.setState({ registerPressed: true, registerFailed: false, registerError: '' })
                 setTimeout(async () => {
                   await fetch('https://localhost:5001/api/users', {
                     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -233,8 +237,8 @@ class Login extends Component {
                       values.mail = ''
                       values.password = ''
                     })
-                    .catch(() => {
-                      this.setState({ registerFailed: true })
+                    .catch((e) => {
+                      this.setState({ registerFailed: true, registerError: e.message })
                     })
                     .then(() => {
                       setSubmitting(false)
@@ -322,7 +326,7 @@ class Login extends Component {
                       color='primary'
                       disabled={!this.state.registerable}
                     >
-                      Register
+                      Create account
                     </Button>
                   </form>
                 ) : (
