@@ -28,7 +28,9 @@ class Comments extends Component {
 
   render () {
     const { comments, fetching } = this.state
+    const { userId } = this.props
     let divComments = fetching === true ? <Loading /> : 'no comments'
+
     if (comments !== null && comments.length > 0) {
       divComments = comments.map(comment => {
         const date = new Date(comment.dateCreated)
@@ -44,12 +46,12 @@ class Comments extends Component {
             <p className='community-like'>
               <span className='community-date'>{formattedDate}</span>
               <br />
-              <Link
-                to={`/user/${comment.userID}`}
-              >
-                {comment.user.name}
-              </Link>{' '}
-              ✏️ a comment:{' '}
+              {userId === comment.userID ? (
+                  'You'
+                ) : (
+                  <Link to={`/user/${comment.userID}`}>{comment.user.name}</Link>
+                )}{' '}
+              wrote a comment:{' '}
               <Link
                 className='community-title'
                 to={`/poi/${comment.userPoiID}`}

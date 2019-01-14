@@ -27,21 +27,14 @@ class Poi extends Component {
       .then(response => response.json())
       .then(userPoi => {
         console.log('user', userPoi)
-        this.setState(
-          {
-            userPoi,
-            poi: userPoi.poi,
-            images: userPoi.images,
-            likes: userPoi.likes,
-            comments: userPoi.comments,
-            fetching: null
-          },
-          () => {
-            setTimeout(() => {
-              $('#poi').toggle(300)
-            })
-          }
-        )
+        this.setState({
+          userPoi,
+          poi: userPoi.poi,
+          images: userPoi.images,
+          likes: userPoi.likes,
+          comments: userPoi.comments,
+          fetching: null
+        })
       })
       .catch(e => {
         console.log(e)
@@ -66,13 +59,8 @@ class Poi extends Component {
       return (
         <CurrentUserConsumer>
           {({ user }) => (
-            <Paper id='poi' className='paper-w-w hidden_div'>
-              <Typography
-                component='h2'
-                variant='headline'
-                align='center'
-                gutterBottom
-              >
+            <Paper className='paper-w-w'>
+              <Typography variant='h5' gutterBottom align='center'>
                 {poi.title}
               </Typography>
               <Typography
@@ -86,7 +74,9 @@ class Poi extends Component {
                   ? 'You'
                   : userPoi.user.name}
               </Typography>
-              <Carousel images={images} />
+              <div className='carousel-cont'>
+                <Carousel images={images} />
+              </div>
               <Divider />
               <PoiLikes
                 user={user}
@@ -96,15 +86,15 @@ class Poi extends Component {
                 fetchLikes={this.fetchLikesForUserPoi}
                 {...this.props}
               />
-              <Typography component='h3' variant='headline' gutterBottom>
+              <Typography variant='h6' gutterBottom>
                 Description:
               </Typography>
               <div className='space'>{poi.description}</div>
-              <Divider />
-              <PoiComments comments={comments} />
               <div id='poi_map'>
                 <GoogleMap poi={poi} />
               </div>
+              <Divider />
+              <PoiComments {...this.props} user={user} comments={comments} />
             </Paper>
           )}
         </CurrentUserConsumer>

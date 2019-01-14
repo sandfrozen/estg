@@ -26,11 +26,27 @@ class Likes extends Component {
 
   render () {
     const { likes, fetching } = this.state
+    const { userId } = this.props
     let divLikes = fetching === true ? <Loading /> : 'no likes'
     if (likes !== null && likes.length > 0) {
       divLikes = likes.map(like => {
         const date = new Date(like.dateCreated)
-        const formattedDate = date.getDate() + '.' + date.getMonth()+1 + '.' + date.getFullYear() + ' at ' + date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0')
+        const formattedDate =
+          date.getDate() +
+          '.' +
+          date.getMonth() +
+          1 +
+          '.' +
+          date.getFullYear() +
+          ' at ' +
+          date.getHours() +
+          ':' +
+          date
+            .getMinutes()
+            .toString()
+            .padStart(2, '0')
+
+        console.log(userId, like)
         return (
           <Fragment key={like.likeID}>
             <div className='like-fragment'>
@@ -45,8 +61,12 @@ class Likes extends Component {
               <p className='community-like'>
                 <span className='community-date'>{formattedDate}</span>
                 <br />
-                <Link to={`/user/${like.userID}`}>{like.user.name}</Link> 👍
-                your place:{' '}
+                {userId === like.userID ? (
+                  'You'
+                ) : (
+                  <Link to={`/user/${like.userID}`}>{like.user.name}</Link>
+                )}{' '}
+                liked your place:{' '}
                 <Link className='community-title' to={`/poi/${like.userPoiID}`}>
                   {like.userPoi.poi.title}
                 </Link>

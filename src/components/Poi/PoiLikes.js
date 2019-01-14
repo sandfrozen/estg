@@ -105,6 +105,8 @@ class PoiLikes extends Component {
     return (
       <div className='space likes'>
         <Fragment>
+          {likeID !== false ? 'You like this POI' : ''}
+          <br/>
           <span onClick={this.handleLikesDiv}>{likes.length} 👍</span>
           {user ? (
             <Fragment>
