@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import { CurrentUserConsumer } from '../../context/CurrentUser.context'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -44,16 +45,24 @@ class Navbar extends Component {
                     <Button
                       color='inherit'
                       component={Link}
-                      to={`/user/${user.name.split(' ').join('-')}-${user.userID}`}
+                      to={`/user/${user.userID}`}
                     >
-                      {user.name}&nbsp;<AccountCircle />
+                      {user.name}&nbsp;
+                      <AccountCircle />
                     </Button>
                     <Button color='inherit' onClick={logout}>
                       Logout
                     </Button>
                   </Fragment>
                 ) : (
-                  <Button color='inherit' component={Link} to='/login'>
+                  <Button
+                    color='inherit'
+                    component={Link}
+                    to={{
+                      pathname: '/login',
+                      state: { from: this.props.location }
+                    }}
+                  >
                     Login | New Account
                   </Button>
                 )}
@@ -66,4 +75,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar
+export default withRouter(Navbar)
