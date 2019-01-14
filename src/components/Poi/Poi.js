@@ -77,14 +77,7 @@ class Poi extends Component {
                   ? 'You'
                   : userPoi.user.name}
               </Typography>
-              <div className='equal_container'>
-                <div className='equal_item'><GoogleMap poi={poi} /></div>
-                <div className='equal_item'><Carousel images={images} /></div>
-              </div>
-              <div id='poi_map'>
-                
-              </div>
-              
+              <Carousel images={images} />
               <Divider />
               <PoiLikes
                 user={user}
@@ -100,6 +93,9 @@ class Poi extends Component {
               <div className='space'>{poi.description}</div>
               <Divider />
               <PoiComments comments={comments} />
+              <div id='poi_map'>
+                <GoogleMap poi={poi} />
+              </div>
             </Paper>
           )}
         </CurrentUserConsumer>
