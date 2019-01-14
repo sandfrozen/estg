@@ -4,6 +4,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'
 import './style.css'
+import Loading from '../Loading/Loading';
 
 const mapStyle = {
   borderRadius: 4,
@@ -89,10 +90,7 @@ export class MapContainer extends Component {
 
 const LoadingContainer = props => (
   <Paper>
-    <div style={{ flexGrow: 1, padding: 16 }}>
-      Map is loading...
-      <LinearProgress />
-    </div>
+    <Loading text='Map is loading...' />
   </Paper>
 )
 

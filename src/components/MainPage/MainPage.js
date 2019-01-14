@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import GridList from '@material-ui/core/GridList'
 import Paper from '@material-ui/core/Paper'
-import GoogleApiWrapper from '../GoogleApiWrapper/GoogleApiWrapper'
+import GoogleMapMain from '../GoogleMapMain/GoogleMapMain'
 import PoiInfo from './PoiInfo/PoiInfo'
 import PoiGridListTile from './PoiGridListTile/PoiGridListTile'
 import NewsFeed from './NewsFeed/NewsFeed'
@@ -66,7 +66,7 @@ class MainPage extends Component {
           <div className='root-main'>
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
-                <GoogleApiWrapper
+                <GoogleMapMain
                   publicUsersPois={publicUsersPois}
                   clickedUserPoi={clickedUserPoi}
                   markerChanged={this.markerChanged}

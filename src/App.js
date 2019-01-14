@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 import { CurrentUserProvider } from './context/CurrentUser.context.js'
 import Navbar from './components/Navbar'
 import './App.css'

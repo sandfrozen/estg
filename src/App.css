@@ -41,11 +41,3 @@ body {
 .space {
   padding-bottom: 16px;
 }
-
-.visible_div {
-  display: block;
-}
-
-.hidden_div {
-  display: none;
-}

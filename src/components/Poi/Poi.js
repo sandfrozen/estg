@@ -1,17 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import { Button, Divider } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Divider } from '@material-ui/core'
 import Loading from '../Loading/Loading'
 import Carousel from './Carousel'
 import { CurrentUserConsumer } from '../../context/CurrentUser.context'
+import PoiLikes from './PoiLikes'
+import PoiComments from './PoiComments'
+import GoogleMap from './GoogleMap'
 
 class Poi extends Component {
   state = {
     userPoi: null,
-    fetching: '', // '' - fetching, null - ok, 'message' - fetch error
-    liking: null
+    fetching: '' // '' - fetching, null - ok, 'message' - fetch error
   }
 
   componentDidMount () {
@@ -24,75 +25,19 @@ class Poi extends Component {
     )
       .then(response => response.json())
       .then(userPoi => {
-        console.log(userPoi)
+        console.log('user', userPoi)
         this.setState({
           userPoi,
           poi: userPoi.poi,
           images: userPoi.images,
           likes: userPoi.likes,
           comments: userPoi.comments,
-          fetching: null,
-          likesDiv: false
+          fetching: null
         })
       })
       .catch(e => {
         console.log(e)
         this.setState({ fetching: e.message })
-      })
-  }
-
-  fetchLikesForUserPoi = async () => {
-    await fetch(
-      `https://localhost:5001/api/likes/forUserPoi/${
-        this.props.match.params.id
-      }`
-    )
-      .then(response => response.json())
-      .then(likes => {
-        console.log(likes)
-        this.setState({
-          likes
-        })
-      })
-      .catch(e => {})
-  }
-
-  handleLikesDiv = () => {
-    this.setState({ likesDiv: !this.state.likesDiv })
-  }
-
-  handleLike = async (userID, event) => {
-    console.log('handleLike', userID)
-    this.setState({ liking: '' })
-    await fetch('https://localhost:5001/api/likes', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, cors, *same-origin
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userPoiID: this.props.match.params.id,
-        userID: userID
-      }) // body data type must match "Content-Type" header
-    })
-      .then(result => {
-        if (result.status === 201) {
-          // created
-          console.log(result)
-          return result.json()
-        } else {
-          throw new Error()
-        }
-      })
-      .then(r => {
-        console.log(r)
-        this.setState({
-          liking: null
-        })
-        this.fetchLikesForUserPoi()
-      })
-      .catch(e => {
-        this.setState({ liking: e.message })
       })
   }
 
@@ -104,7 +49,6 @@ class Poi extends Component {
       images,
       likes,
       comments,
-      likesDiv,
       liking
     } = this.state
     if (fetching === null && userPoi.private === true) {
@@ -128,83 +72,34 @@ class Poi extends Component {
                 align='center'
                 gutterBottom
               >
-                {user && user.userID === userPoi.userID
-                  ? 'it is your POI'
-                  : 'POI by ' + userPoi.user.name}
+                {'Author: '}
+                {user !== null && user.userID === userPoi.userID
+                  ? 'You'
+                  : userPoi.user.name}
               </Typography>
-              <Carousel images={images} />
-              <Divider />
-              <div className='space likes'>
-                <span onClick={this.handleLikesDiv}>{likes.length} 👍</span>
-                {user ? (
-                  <Fragment>
-                    <Button
-                      onClick={() => this.handleLike(user.userID)}
-                      color='primary'
-                    >
-                      {liking === ''
-                        ? 'adding your like...'
-                        : liking === null
-                          ? 'Like'
-                          : 'Like - ' + liking}
-                    </Button>
-                  </Fragment>
-                ) : (
-                  <Button
-                    color='primary'
-                    component={Link}
-                    to={{
-                      pathname: '/login',
-                      state: { from: this.props.location }
-                    }}
-                  >
-                    Like it? Login first
-                  </Button>
-                )}
-                {user && user.userID === userPoi.userID && (
-                  <Button
-                    color='secondary'
-                    component={Link}
-                    to={`/edit-poi/${userPoi.userPoiID}`}
-                  >
-                    Edit POI
-                  </Button>
-                )}
-                <Divider />
-
-                {likes.length > 0 && (
-                  <div className={likesDiv ? 'visible_div' : 'hidden_div'}>
-                    People who likes this POI:
-                    <ul>
-                      {likes.map(like => (
-                        <li key={like.likeID}>{like.user.name}</li>
-                      ))}
-                    </ul>
-                    <Divider />
-                  </div>
-                )}
+              <div className='equal_container'>
+                <div className='equal_item'><GoogleMap poi={poi} /></div>
+                <div className='equal_item'><Carousel images={images} /></div>
               </div>
+              <div id='poi_map'>
+                
+              </div>
+              
+              <Divider />
+              <PoiLikes
+                user={user}
+                userPoi={userPoi}
+                likes={likes}
+                liking={liking}
+                fetchLikes={this.fetchLikesForUserPoi}
+                {...this.props}
+              />
               <Typography component='h3' variant='headline' gutterBottom>
                 Description:
               </Typography>
               <div className='space'>{poi.description}</div>
               <Divider />
-              <div className='space comments'>
-                {comments.length === 0 && <p>No comments.</p>}
-                {comments.length > 0 && (
-                  <div>
-                    Comments:
-                    {comments.map(comment => (
-                      <div key={comment.commentID}>
-                        <p>
-                          {comment.user.name} {comment.dateCreated}
-                        </p>
-                        <p>{comment.content}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <PoiComments comments={comments} />
             </Paper>
           )}
         </CurrentUserConsumer>

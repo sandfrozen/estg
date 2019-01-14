@@ -37,7 +37,7 @@ class Carousel extends Component {
     const maxImages = images.length
     let direction = 'rtl'
     return (
-      <Fragment>
+      <div>
         <MobileStepper
           steps={maxImages}
           position='static'
@@ -49,7 +49,6 @@ class Carousel extends Component {
               onClick={this.handleNext}
               disabled={activeImage === maxImages - 1}
             >
-              Next image
               {direction === 'rtl' ? (
                 <KeyboardArrowRight />
               ) : (
@@ -68,7 +67,6 @@ class Carousel extends Component {
               ) : (
                 <KeyboardArrowRight />
               )}
-              Previous image
             </Button>
           }
         />
@@ -77,6 +75,7 @@ class Carousel extends Component {
           index={activeImage}
           onChangeIndex={this.handleImageChange}
           enableMouseEvents
+          interval={3700}
         >
           {images.map((image, index) => (
             <div key={image.imageID}>
@@ -86,7 +85,7 @@ class Carousel extends Component {
             </div>
           ))}
         </AutoPlaySwipeableViews>
-      </Fragment>
+      </div>
     )
   }
 }
