@@ -97,7 +97,9 @@ class PoiLikes extends Component {
   render () {
     const { likesVisible, liking, likes } = this.state
     const { user, userPoi } = this.props
-    const likeIndex = user && R.findIndex(R.propEq('userID', user.userID))(likes) || -1
+    const likeIndex = user
+      ? R.findIndex(R.propEq('userID', user.userID))(likes)
+      : -1
     const likeID = likeIndex !== -1 && likes[likeIndex].likeID // false or index
 
     return (
