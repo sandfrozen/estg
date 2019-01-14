@@ -8,6 +8,7 @@ import { CurrentUserConsumer } from '../../context/CurrentUser.context'
 import PoiLikes from './PoiLikes'
 import PoiComments from './PoiComments'
 import GoogleMap from './GoogleMap'
+import $ from 'jquery'
 
 class Poi extends Component {
   state = {
@@ -26,14 +27,21 @@ class Poi extends Component {
       .then(response => response.json())
       .then(userPoi => {
         console.log('user', userPoi)
-        this.setState({
-          userPoi,
-          poi: userPoi.poi,
-          images: userPoi.images,
-          likes: userPoi.likes,
-          comments: userPoi.comments,
-          fetching: null
-        })
+        this.setState(
+          {
+            userPoi,
+            poi: userPoi.poi,
+            images: userPoi.images,
+            likes: userPoi.likes,
+            comments: userPoi.comments,
+            fetching: null
+          },
+          () => {
+            setTimeout(() => {
+              $('#poi').toggle(300)
+            })
+          }
+        )
       })
       .catch(e => {
         console.log(e)
@@ -51,13 +59,14 @@ class Poi extends Component {
       comments,
       liking
     } = this.state
+    console.log(comments)
     if (fetching === null && userPoi.private === true) {
       return <Paper className='paper-w-w'>This POI is private.</Paper>
     } else if (fetching === null) {
       return (
         <CurrentUserConsumer>
           {({ user }) => (
-            <Paper className='paper-w-w'>
+            <Paper id='poi' className='paper-w-w hidden_div'>
               <Typography
                 component='h2'
                 variant='headline'
