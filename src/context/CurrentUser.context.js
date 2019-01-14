@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import transitions from '@material-ui/core/styles/transitions';
 
 const CurrentUserContext = React.createContext()
 
@@ -11,13 +12,34 @@ export class CurrentUserProvider extends Component {
   }
 
   componentDidMount () {
+    console.log('CurrentUserProvider DID MOUNT')
     try {
       const cookieUser = JSON.parse(localStorage.getItem('user'))
 
       if (cookieUser) {
-        this.setState({
-          user: cookieUser
+        console.log(cookieUser)
+        fetch('https://localhost:5001/api/auth/check', {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, cors, *same-origin
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            mail: cookieUser.mail,
+            userID: cookieUser.userID
+          }) // body data type must match "Content-Type" header
         })
+          .then(result => {
+            console.log('check cookieuser', result)
+            if (result.status === 200) {
+              this.setState({
+                user: cookieUser
+              })
+            } else {
+              this.logout()
+            }
+          })
+          .catch(e => {})
       }
 
       console.log('context provider did mount - after', cookieUser)
@@ -40,7 +62,7 @@ export class CurrentUserProvider extends Component {
     })
       .then(result => {
         console.log(result)
-        if(result.status !== 200) {
+        if (result.status !== 200) {
           throw new Error('Incorrect values.')
         }
         return result.json()
@@ -59,7 +81,7 @@ export class CurrentUserProvider extends Component {
           }
         )
       })
-      .catch((e) => {
+      .catch(e => {
         console.log('conumer login error', e)
         this.setState(
           {
@@ -81,7 +103,9 @@ export class CurrentUserProvider extends Component {
   }
 
   logout = () => {
-    this.setState({ user: null, loginError: '' }, () => localStorage.setItem('user', null))
+    this.setState({ user: null, loginError: '' }, () =>
+      localStorage.setItem('user', null)
+    )
   }
 
   render () {
