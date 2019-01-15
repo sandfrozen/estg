@@ -26,7 +26,7 @@ class PoiComments extends Component {
       return
     }
     const userID = this.props.user.userID
-    const userPoiID = this.props.match.params.id
+    const poiID = this.props.match.params.id
     this.setState({ commenting: true })
     await fetch('https://localhost:5001/api/comments', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -36,7 +36,7 @@ class PoiComments extends Component {
       },
       body: JSON.stringify({
         userID: userID,
-        userPoiID: userPoiID,
+        poiID: poiID,
         content: content,
         dateCreated: new Date().toISOString(),
         dateEdited: new Date().toISOString()

@@ -17,7 +17,7 @@ class PoiLikes extends Component {
     this.setState({ likes: this.props.likes })
   }
 
-  userPoiId = () => {
+  poiId = () => {
     return this.props.match.params.id
   }
 
@@ -36,7 +36,7 @@ class PoiLikes extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userPoiID: this.props.userPoi.userPoiID,
+          poiID: this.props.poi.poiID,
           userID: userID
         }) // body data type must match "Content-Type" header
       })
@@ -80,7 +80,7 @@ class PoiLikes extends Component {
 
   fetchLikes = async () => {
     await fetch(
-      `https://localhost:5001/api/likes/forUserPoi/${this.userPoiId()}`
+      `https://localhost:5001/api/likes/forPoi/${this.poiId()}`
     )
       .then(response => response.json())
       .then(likes => {
@@ -97,7 +97,7 @@ class PoiLikes extends Component {
 
   render () {
     const { likesVisible, liking, likes } = this.state
-    const { user, userPoi } = this.props
+    const { user, poi } = this.props
     const likeIndex = user
       ? R.findIndex(R.propEq('userID', user.userID))(likes)
       : -1
@@ -143,12 +143,12 @@ class PoiLikes extends Component {
               Like it? Login first
             </Button>
           )}
-          {user && user.userID === userPoi.userID && (
+          {user && user.userID === poi.userID && (
             <Button
               color='secondary'
               component={Link}
               className='to_right'
-              to={`/edit-poi/${userPoi.userPoiID}`}
+              to={`/edit-poi/${poi.poiID}`}
             >
               Edit POI
             </Button>

@@ -23,17 +23,16 @@ class Poi extends Component {
 
   fetchPoi = async () => {
     await fetch(
-      `https://localhost:5001/api/userPois/${this.props.match.params.id}`
+      `https://localhost:5001/api/pois/${this.props.match.params.id}`
     )
       .then(response => response.json())
-      .then(userPoi => {
-        console.log('user', userPoi)
+      .then(poi => {
+        console.log('poi', poi)
         this.setState({
-          userPoi,
-          poi: userPoi.poi,
-          images: userPoi.images,
-          likes: userPoi.likes,
-          comments: userPoi.comments,
+          poi,
+          images: poi.images,
+          likes: poi.likes,
+          comments: poi.comments,
           fetching: null
         })
       })
@@ -45,7 +44,6 @@ class Poi extends Component {
 
   render () {
     const {
-      userPoi,
       fetching,
       poi,
       images,
@@ -54,10 +52,10 @@ class Poi extends Component {
       liking
     } = this.state
     console.log(comments)
-    if (fetching === null && userPoi.private === true) {
+    if (fetching === null && poi.private === true) {
       return <Paper className='paper-w-w'>This POI is private.</Paper>
     } else if (fetching === null) {
-      const timeAgo = ta.ago(userPoi.dateCreated)
+      const timeAgo = ta.ago(poi.dateCreated)
       return (
         <CurrentUserConsumer>
           {({ user }) => (
@@ -73,16 +71,16 @@ class Poi extends Component {
                 gutterBottom
               >
                 {'Author: '}
-                {user !== null && user.userID === userPoi.userID
+                {user !== null && user.userID === poi.userID
                   ? 'You'
-                  : userPoi.user.name}
+                  : poi.user.name}
               </Typography>
               <div className='carousel-cont'>
                 <Carousel images={images} />
               </div>
               <PoiLikes
                 user={user}
-                userPoi={userPoi}
+                poi={poi}
                 likes={likes}
                 liking={liking}
                 fetchLikes={this.fetchLikesForUserPoi}

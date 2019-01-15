@@ -55,7 +55,7 @@ class Likes extends Component {
                   <Link to={`/user/${like.userID}`}>{like.user.name}</Link>
                 )}{' '}
                 liked your place:{' '}
-                <Link className='community-title' to={`/poi/${like.userPoiID}`}>
+                <Link className='community-title' to={`/poi/${like.poiID}`}>
                   {like.poi.title}
                 </Link>
               </p>
