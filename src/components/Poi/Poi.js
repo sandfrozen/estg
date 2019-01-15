@@ -62,7 +62,7 @@ class Poi extends Component {
         <CurrentUserConsumer>
           {({ user }) => (
             <Paper className='paper-w-w'>
-              <div className='community-date'>POI added: {timeAgo}</div>
+              <div className='community-date'>added {timeAgo}</div>
               <Typography variant='h5' gutterBottom align='center'>
                 {poi.title}
               </Typography>

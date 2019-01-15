@@ -16,7 +16,7 @@ class PoiInfo extends Component {
   }
 
   render () {
-    const { clickedUserPoi } = this.props
+    const { clickedUserPoi, fetchingError } = this.props
 
     if (clickedUserPoi === null) {
       return (
@@ -37,7 +37,9 @@ class PoiInfo extends Component {
             decorative ceramic tiles. Just outside Lisbon is a string of
             Atlantic beaches, from Cascais to Estoril.
           </div>
-          <Button color='primary'>Click place to see more</Button>
+          <Button color='primary' onClick={() => this.props.reload()}>
+            Press to reload
+          </Button>
         </div>
       )
     } else {
@@ -48,7 +50,11 @@ class PoiInfo extends Component {
       return (
         <div className='poi_info' id='poi_info'>
           <div>
-            <img className='poi_image' src={imageUrl} alt={clickedUserPoi.poi.title} />
+            <img
+              className='poi_image'
+              src={imageUrl}
+              alt={clickedUserPoi.poi.title}
+            />
           </div>
           <div className='poi_title'>{clickedUserPoi.poi.title}</div>
           <div className='poi_desc'>{clickedUserPoi.poi.description}</div>
@@ -59,11 +65,7 @@ class PoiInfo extends Component {
           >
             Show more
           </Button>
-          <Button
-            onClick={this._showLisbon}
-          >
-            Lisbon info
-          </Button>
+          <Button onClick={this._showLisbon}>Lisbon info</Button>
         </div>
       )
     }

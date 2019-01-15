@@ -59,7 +59,7 @@ class MainPage extends Component {
   }
 
   render () {
-    const { clickedUserPoi, publicUsersPois } = this.state
+    const { clickedUserPoi, publicUsersPois, fetchingError } = this.state
     return (
       <CurrentUserConsumer>
         {({ user }) => (
@@ -75,7 +75,7 @@ class MainPage extends Component {
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo clickedUserPoi={clickedUserPoi} showLisbon={this.showLisbon}/>
+                  <PoiInfo clickedUserPoi={clickedUserPoi} showLisbon={this.showLisbon} reload={this.fetchPois}/>
                 </Paper>
               </Grid>
             </Grid>
