@@ -9,6 +9,7 @@ import PoiLikes from './PoiLikes'
 import PoiComments from './PoiComments'
 import GoogleMap from './GoogleMap'
 import $ from 'jquery'
+import ta from 'time-ago'
 
 class Poi extends Component {
   state = {
@@ -56,10 +57,12 @@ class Poi extends Component {
     if (fetching === null && userPoi.private === true) {
       return <Paper className='paper-w-w'>This POI is private.</Paper>
     } else if (fetching === null) {
+      const timeAgo = ta.ago(userPoi.dateCreated)
       return (
         <CurrentUserConsumer>
           {({ user }) => (
             <Paper className='paper-w-w'>
+              <div className='community-date'>POI added: {timeAgo}</div>
               <Typography variant='h5' gutterBottom align='center'>
                 {poi.title}
               </Typography>
@@ -77,7 +80,6 @@ class Poi extends Component {
               <div className='carousel-cont'>
                 <Carousel images={images} />
               </div>
-              <Divider />
               <PoiLikes
                 user={user}
                 userPoi={userPoi}

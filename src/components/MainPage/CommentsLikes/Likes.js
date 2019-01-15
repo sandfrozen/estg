@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Loading from '../../Loading/Loading'
+import ta from 'time-ago'
 
 class Likes extends Component {
   state = {
@@ -31,20 +32,7 @@ class Likes extends Component {
     if (likes !== null && likes.length > 0) {
       divLikes = likes.map(like => {
         const date = new Date(like.dateCreated)
-        const formattedDate =
-          date.getDate() +
-          '.' +
-          date.getMonth() +
-          1 +
-          '.' +
-          date.getFullYear() +
-          ' at ' +
-          date.getHours() +
-          ':' +
-          date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')
+        const timeAgo = ta.ago(date)
 
         console.log(userId, like)
         return (
@@ -59,7 +47,7 @@ class Likes extends Component {
                 alt='poi'
               />
               <p className='community-like'>
-                <span className='community-date'>{formattedDate}</span>
+                <span className='community-date'>{timeAgo}</span>
                 <br />
                 {userId === like.userID ? (
                   'You'

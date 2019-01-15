@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import Loading from '../../Loading/Loading';
+import Loading from '../../Loading/Loading'
+import ta from 'time-ago'
 
 class Comments extends Component {
   state = {
@@ -34,37 +35,40 @@ class Comments extends Component {
     if (comments !== null && comments.length > 0) {
       divComments = comments.map(comment => {
         const date = new Date(comment.dateCreated)
-        const formattedDate = date.getDate() + '.' + date.getMonth()+1 + '.' + date.getFullYear() + ' at ' + date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0')
-        return(
-        <Fragment key={comment.commentID}>
-          <div className='like-fragment'>
-            <img
-              className='community-image'
-              src={comment.userPoi.images[0].url}
-              alt='poi'
-            />
-            <p className='community-like'>
-              <span className='community-date'>{formattedDate}</span>
-              <br />
-              {userId === comment.userID ? (
+        const timeAgo = ta.ago(date)
+        return (
+          <Fragment key={comment.commentID}>
+            <div className='like-fragment'>
+              <img
+                className='community-image'
+                src={comment.userPoi.images[0].url}
+                alt='poi'
+              />
+              <p className='community-like'>
+                <span className='community-date'>{timeAgo}</span>
+                <br />
+                {userId === comment.userID ? (
                   'You'
                 ) : (
-                  <Link to={`/user/${comment.userID}`}>{comment.user.name}</Link>
+                  <Link to={`/user/${comment.userID}`}>
+                    {comment.user.name}
+                  </Link>
                 )}{' '}
-              wrote a comment:{' '}
-              <Link
-                className='community-title'
-                to={`/poi/${comment.userPoiID}`}
-              >
-                {comment.userPoi.poi.title}
-              </Link>
-              <br />
-              <span className='community-comment'>{comment.content}</span>
-            </p>
-          </div>
-          <Divider />
-        </Fragment>
-      )})
+                wrote a comment:{' '}
+                <Link
+                  className='community-title'
+                  to={`/poi/${comment.userPoiID}`}
+                >
+                  {comment.userPoi.poi.title}
+                </Link>
+                <br />
+                <span className='community-comment'>{comment.content}</span>
+              </p>
+            </div>
+            <Divider />
+          </Fragment>
+        )
+      })
     }
 
     return <div>{divComments}</div>

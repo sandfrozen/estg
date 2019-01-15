@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Divider } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 import Chip from '@material-ui/core/Chip'
 import * as R from 'ramda'
@@ -105,8 +106,10 @@ class PoiLikes extends Component {
     return (
       <div className='space likes'>
         <Fragment>
-          {likeID !== false ? 'You like this POI' : ''}
-          <br/>
+          <Typography color='primary' variant='overline'>
+            {likeID !== false ? 'You like this POI' : 'press like :)'}
+          </Typography>
+
           <span onClick={this.handleLikesDiv}>{likes.length} 👍</span>
           {user ? (
             <Fragment>
