@@ -19,24 +19,23 @@ class PoiGridListTile extends Component {
     this.props.handleClickOnPoi(userPoi)
   }
   render () {
-    const { publicUsersPois, clickedUserPoi } = this.props
-    if (publicUsersPois !== null && publicUsersPois.length > 0) {
-      const poisList = publicUsersPois.map(up => {
+    const { publicPois, clickedPoi } = this.props
+    if (publicPois !== null && publicPois.length > 0) {
+      const poisList = publicPois.map(p => {
         // const poiClassColor = clickedPoi === poi ? 'bw' : 'color'
-        const poiClassShadow = clickedUserPoi === up ? 'no-shadow' : 'shadow'
+        const poiClassShadow = clickedPoi === p ? 'no-shadow' : 'shadow'
         let imageUrl = imagePlaceholder
         try {
-          imageUrl = up.images[0].url
+          imageUrl = p.images[0].url
         } catch {}
-        const link = '/poi/'+up.userPoiID
-        const MyLink = <Link to={link}/>
+        console.log('pglt', p)
         return (
-          <Fragment key={up.userPoiID}>
-            <GridListTile className='my-col' onClick={this.onClick(up)}>
-              <img src={imageUrl} alt={up.poi.title} />
+          <Fragment key={p.userPoiID}>
+            <GridListTile className='my-col' onClick={this.onClick(p)}>
+              <img src={imageUrl} alt={p.title} />
               <GridListTileBar
-                title={up.poi.title}
-                subtitle={<span>by: {up.user.name}</span>}
+                title={p.title}
+                subtitle={<span>by: {p.user.name}</span>}
                 className='titleBar'
                 actionIcon={
                   <IconButton

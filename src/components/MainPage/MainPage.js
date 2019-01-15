@@ -19,9 +19,9 @@ class MainPage extends Component {
       lng: -9.132729
     },
     zoom: 11,
-    clickedUserPoi: null,
+    clickedPoi: null,
     mapSize: 6,
-    publicUsersPois: null,
+    publicPois: null,
     fetching: true,
     fetchingError: ''
   }
@@ -31,10 +31,10 @@ class MainPage extends Component {
   }
 
   fetchPois = async () => {
-    await fetch('https://localhost:5001/api/userPois/public')
+    await fetch('https://localhost:5001/api/pois/public')
       .then(response => response.json())
-      .then(publicUsersPois => {
-        this.setState({ publicUsersPois, fetching: false, fetchingError: '' })
+      .then(publicPois => {
+        this.setState({ publicPois, fetching: false, fetchingError: '' })
       })
       .catch((e) => {
         console.log(e)
@@ -43,23 +43,23 @@ class MainPage extends Component {
   }
 
   showLisbon = () => {
-    this.setState({ clickedUserPoi: null })
+    this.setState({ clickedPoi: null })
   }
 
   markerChanged = poi => {
-    this.setState({ clickedUserPoi: poi })
+    this.setState({ clickedPoi: poi })
   }
 
   handleMap = () => {
     // this.setState({ mapSize: 9 })
   }
 
-  handleClickOnPoi = clickedUserPoi => {
-    this.setState({ clickedUserPoi })
+  handleClickOnPoi = clickedPoi => {
+    this.setState({ clickedPoi })
   }
 
   render () {
-    const { clickedUserPoi, publicUsersPois, fetchingError } = this.state
+    const { clickedPoi, publicPois, fetchingError } = this.state
     return (
       <CurrentUserConsumer>
         {({ user }) => (
@@ -67,23 +67,23 @@ class MainPage extends Component {
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
                 <GoogleMapMain
-                  publicUsersPois={publicUsersPois}
-                  clickedUserPoi={clickedUserPoi}
+                  publicPois={publicPois}
+                  clickedPoi={clickedPoi}
                   markerChanged={this.markerChanged}
                 />
               </Grid>
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo clickedUserPoi={clickedUserPoi} showLisbon={this.showLisbon} reload={this.fetchPois}/>
+                  <PoiInfo clickedPoi={clickedPoi} showLisbon={this.showLisbon} reload={this.fetchPois}/>
                 </Paper>
               </Grid>
             </Grid>
 
             <GridList className='gridList'>
               <PoiGridListTile
-                publicUsersPois={publicUsersPois}
-                clickedUserPoi={clickedUserPoi}
+                publicPois={publicPois}
+                clickedPoi={clickedPoi}
                 handleClickOnPoi={this.handleClickOnPoi}
                 fetching={this.state.fetching}
                 fetchingError={this.state.fetchingError}

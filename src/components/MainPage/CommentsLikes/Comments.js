@@ -41,7 +41,7 @@ class Comments extends Component {
             <div className='like-fragment'>
               <img
                 className='community-image'
-                src={comment.userPoi.images[0].url}
+                src={comment.poi.images[0].url}
                 alt='poi'
               />
               <p className='community-like'>
@@ -57,9 +57,9 @@ class Comments extends Component {
                 wrote a comment:{' '}
                 <Link
                   className='community-title'
-                  to={`/poi/${comment.userPoiID}`}
+                  to={`/poi/${comment.poiID}`}
                 >
-                  {comment.userPoi.poi.title}
+                  {comment.poi.title}
                 </Link>
                 <br />
                 <span className='community-comment'>{comment.content}</span>

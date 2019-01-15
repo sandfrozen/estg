@@ -34,14 +34,14 @@ class Likes extends Component {
         const date = new Date(like.dateCreated)
         const timeAgo = ta.ago(date)
 
-        console.log(userId, like)
+        console.log('like', like)
         return (
           <Fragment key={like.likeID}>
             <div className='like-fragment'>
               <img
                 className='community-image'
                 src={
-                  like.userPoi.images[0].url ||
+                  like.poi.images[0].url ||
                   'https://via.placeholder.com/150'
                 }
                 alt='poi'
@@ -56,7 +56,7 @@ class Likes extends Component {
                 )}{' '}
                 liked your place:{' '}
                 <Link className='community-title' to={`/poi/${like.userPoiID}`}>
-                  {like.userPoi.poi.title}
+                  {like.poi.title}
                 </Link>
               </p>
             </div>

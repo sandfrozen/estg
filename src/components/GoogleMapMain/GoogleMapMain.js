@@ -21,24 +21,24 @@ const mapContainer = {
 export class MapContainer extends Component {
 
   state = {
-    clickedUserPoi: null
+    clickedPoi: null
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps.clickedUserPoi)
+    console.log(nextProps.clickedPoi)
     this.setState({
-      clickedUserPoi: nextProps.clickedUserPoi
+      clickedPoi: nextProps.clickedPoi
     })
   }
 
-  onMarkerClick = clickedUserPoi => e => {
-    this.props.markerChanged(clickedUserPoi)
-    this.setState({ clickedUserPoi })
+  onMarkerClick = clickedPoi => e => {
+    this.props.markerChanged(clickedPoi)
+    this.setState({ clickedPoi })
   }
 
   render () {
-    const publicUsersPois = this.props.publicUsersPois
-    const clickedUserPoi = this.state.clickedUserPoi
+    const publicPois = this.props.publicPois
+    const clickedPoi = this.state.clickedPoi
     // let pois = []
     // if (poi) {
     //   poiz.forEach(p => {
@@ -50,12 +50,12 @@ export class MapContainer extends Component {
     //   pois = poiz
     // }
     let markers = null
-    if (publicUsersPois !== null) {
-      markers = publicUsersPois.map(p => {
+    if (publicPois !== null) {
+      markers = publicPois.map(p => {
         return (
           <Marker
-            key={p.userPoiID}
-            position={{ lat: p.poi.latitude, lng: p.poi.longitude }}
+            key={p.poiID}
+            position={{ lat: p.latitude, lng: p.longitude }}
             onClick={this.onMarkerClick(p)}
           />
         )
@@ -75,11 +75,11 @@ export class MapContainer extends Component {
           lng: -9.151234
         }}
       >
-        {publicUsersPois && markers}
-        {clickedUserPoi && (
-          <InfoWindow visible position={{ lat: clickedUserPoi.poi.latitude, lng: clickedUserPoi.poi.longitude }}>
+        {publicPois && markers}
+        {clickedPoi && (
+          <InfoWindow visible position={{ lat: clickedPoi.latitude, lng: clickedPoi.longitude }}>
             <div>
-              <h3>{clickedUserPoi.poi.title}</h3>
+              <h3>{clickedPoi.title}</h3>
             </div>
           </InfoWindow>
         )}
