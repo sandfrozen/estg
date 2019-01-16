@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 
 import './style.css'
-import GoogleMapEdit from './GoogleMapEdit';
+import GoogleMapEdit from './GoogleMapEdit'
 
 class PoiEdit extends Component {
   state = {
@@ -93,19 +93,19 @@ class PoiEdit extends Component {
   }
 
   handleNewLatLng = (lat, lng) => {
-    this.setState({ latitude: lat, longitude: lng})
+    this.setState({ latitude: lat, longitude: lng })
   }
 
   render () {
     const { fetching, poi } = this.state
 
-    if (fetching) {
+    if (fetching === true) {
       return (
         <Paper className='paper-w-w'>
           <Loading text='Poi is loading...' />
         </Paper>
       )
-    } else {
+    } else if (fetching === null) {
       const { saved, latitude, longitude } = this.state
       return (
         <CurrentUserConsumer>
@@ -146,7 +146,11 @@ class PoiEdit extends Component {
               </FormGroup>
               <p>Click to choose new localization</p>
               <div id='poi_map_edit'>
-                <GoogleMapEdit updateLatLng={this.handleNewLatLng} lat={latitude} lng={longitude}/>
+                <GoogleMapEdit
+                  updateLatLng={this.handleNewLatLng}
+                  lat={latitude}
+                  lng={longitude}
+                />
               </div>
               <Button
                 onClick={() => {
@@ -160,7 +164,6 @@ class PoiEdit extends Component {
               </Button>
               <Button
                 component={Link}
-                
                 color='primary'
                 to={`/poi/${this.poiId()}`}
               >
@@ -169,6 +172,12 @@ class PoiEdit extends Component {
             </Paper>
           )}
         </CurrentUserConsumer>
+      )
+    } else {
+      return (
+        <Paper className='paper-w-w'>
+          {this.state.fetching}
+        </Paper>
       )
     }
   }
