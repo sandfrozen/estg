@@ -37,7 +37,6 @@ class MainPage extends Component {
         this.setState({ publicPois, fetching: false, fetchingError: '' })
       })
       .catch((e) => {
-        console.log(e)
         this.setState({ fetching: false, fetchingError: e.message })
       })
   }

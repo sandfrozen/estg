@@ -22,12 +22,9 @@ class Poi extends Component {
   }
 
   fetchPoi = async () => {
-    await fetch(
-      `https://localhost:5001/api/pois/${this.props.match.params.id}`
-    )
+    await fetch(`https://localhost:5001/api/pois/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(poi => {
-        console.log('poi', poi)
         this.setState({
           poi,
           images: poi.images,
@@ -37,64 +34,63 @@ class Poi extends Component {
         })
       })
       .catch(e => {
-        console.log(e)
         this.setState({ fetching: e.message })
       })
   }
 
   render () {
-    const {
-      fetching,
-      poi,
-      images,
-      likes,
-      comments,
-      liking
-    } = this.state
-    console.log(comments)
-    if (fetching === null && poi.private === true) {
-      return <Paper className='paper-w-w'>This POI is private.</Paper>
-    } else if (fetching === null) {
+    const { fetching, poi, images, likes, comments, liking } = this.state
+    if (fetching === null) {
       const timeAgo = ta.ago(poi.dateCreated)
       return (
         <CurrentUserConsumer>
           {({ user }) => (
             <Paper className='paper-w-w'>
-              <div className='community-date'>added {timeAgo}</div>
-              <Typography variant='h5' gutterBottom align='center'>
-                {poi.title}
-              </Typography>
-              <Typography
-                color='primary'
-                variant='overline'
-                align='center'
-                gutterBottom
-              >
-                {'Author: '}
-                {user !== null && user.userID === poi.userID
-                  ? 'You'
-                  : poi.user.name}
-              </Typography>
-              <div className='carousel-cont'>
-                <Carousel images={images} />
-              </div>
-              <PoiLikes
-                user={user}
-                poi={poi}
-                likes={likes}
-                liking={liking}
-                fetchLikes={this.fetchLikesForUserPoi}
-                {...this.props}
-              />
-              <Typography variant='h6' gutterBottom>
-                Description:
-              </Typography>
-              <div className='space'>{poi.description}</div>
-              <div id='poi_map'>
-                <GoogleMap poi={poi} />
-              </div>
-              <Divider />
-              <PoiComments {...this.props} user={user} comments={comments} />
+              {poi.private === true && poi.userID !== user.userID ? (
+                <Paper className='paper-w-w'>This POI is private.</Paper>
+              ) : (
+                <Fragment>
+                  <div className='community-date'>added {timeAgo}, {poi.private ? 'private' : 'public'}</div>
+                  <Typography variant='h5' gutterBottom align='center'>
+                    {poi.title}
+                  </Typography>
+                  <Typography
+                    color='primary'
+                    variant='overline'
+                    align='center'
+                    gutterBottom
+                  >
+                    {'Author: '}
+                    {user !== null && user.userID === poi.userID
+                      ? 'You'
+                      : poi.user.name}
+                  </Typography>
+                  <div className='carousel-cont'>
+                    <Carousel images={images} />
+                  </div>
+                  <PoiLikes
+                    user={user}
+                    poi={poi}
+                    likes={likes}
+                    liking={liking}
+                    fetchLikes={this.fetchLikesForUserPoi}
+                    {...this.props}
+                  />
+                  <Typography variant='h6' gutterBottom>
+                    Description:
+                  </Typography>
+                  <div className='space'>{poi.description}</div>
+                  <div id='poi_map'>
+                    <GoogleMap poi={poi} />
+                  </div>
+                  <Divider />
+                  <PoiComments
+                    {...this.props}
+                    user={user}
+                    comments={comments}
+                  />
+                </Fragment>
+              )}
             </Paper>
           )}
         </CurrentUserConsumer>
@@ -106,6 +102,7 @@ class Poi extends Component {
         </Paper>
       )
     } else {
+      // error
       return <Paper className='paper-w-w'>{fetching}</Paper>
     }
   }

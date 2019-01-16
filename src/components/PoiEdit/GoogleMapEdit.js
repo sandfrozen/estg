@@ -18,8 +18,15 @@ const mapContainer = {
 }
 
 export class MapContainer extends Component {
+  onMapClicked = (props, map, e) => {
+    const lat = e.latLng.lat()
+    const lng = e.latLng.lng()
+    console.log('m', lat, lng)
+    this.props.updateLatLng(lat, lng)
+  }
+
   render () {
-    const { poi } = this.props
+    const { lat, lng } = this.props
     return (
       <Map
         google={this.props.google}
@@ -27,13 +34,12 @@ export class MapContainer extends Component {
         containerStyle={mapContainer}
         style={mapStyle}
         initialCenter={{
-          lat: poi.latitude,
-          lng: poi.longitude
+          lat,
+          lng
         }}
+        onClick={this.onMapClicked}
       >
-        <Marker
-          position={{ lat: poi.latitude, lng: poi.longitude }}
-        />
+        <Marker position={{ lat, lng }} />
       </Map>
     )
   }

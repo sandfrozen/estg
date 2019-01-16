@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom'
 
 class PoiGridListTile extends Component {
   userPoiInfoIconClick = () => {
-    console.log('userPoiInfoIconClick')
   }
 
   onClick = userPoi => event => {
@@ -28,7 +27,6 @@ class PoiGridListTile extends Component {
         try {
           imageUrl = p.images[0].url
         } catch {}
-        console.log('pglt', p)
         return (
           <Fragment key={p.userPoiID}>
             <GridListTile className='my-col' onClick={this.onClick(p)}>

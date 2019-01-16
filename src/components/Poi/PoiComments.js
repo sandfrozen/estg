@@ -20,7 +20,6 @@ class PoiComments extends Component {
   }
 
   addComment = async () => {
-    console.log(this.refs.inputcontent.value)
     const content = this.refs.inputcontent.value
     if (content.length === 0) {
       return

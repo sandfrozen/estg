@@ -33,8 +33,6 @@ class Likes extends Component {
       divLikes = likes.map(like => {
         const date = new Date(like.dateCreated)
         const timeAgo = ta.ago(date)
-
-        console.log('like', like)
         return (
           <Fragment key={like.likeID}>
             <div className='like-fragment'>

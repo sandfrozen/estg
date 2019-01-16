@@ -1,0 +1,8 @@
+#poi_map_edit {
+  height: 40vh;
+  width: 100%;
+}
+#poi_map_edit>* {
+  height: 40vh;
+  width: 100%;
+}

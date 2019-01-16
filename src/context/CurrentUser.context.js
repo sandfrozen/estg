@@ -12,12 +12,10 @@ export class CurrentUserProvider extends Component {
   }
 
   componentDidMount () {
-    console.log('CurrentUserProvider DID MOUNT')
     try {
       const cookieUser = JSON.parse(localStorage.getItem('user'))
 
       if (cookieUser) {
-        console.log(cookieUser)
         fetch('https://localhost:5001/api/auth/check', {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, cors, *same-origin
@@ -30,7 +28,6 @@ export class CurrentUserProvider extends Component {
           }) // body data type must match "Content-Type" header
         })
           .then(result => {
-            console.log('check cookieuser', result)
             if (result.status === 200) {
               this.setState({
                 user: cookieUser
@@ -42,9 +39,7 @@ export class CurrentUserProvider extends Component {
           .catch(e => {})
       }
 
-      console.log('context provider did mount - after', cookieUser)
     } catch (e) {
-      console.log('context provider did mount - after error: ', e)
     }
   }
 
@@ -61,14 +56,12 @@ export class CurrentUserProvider extends Component {
       }) // body data type must match "Content-Type" header
     })
       .then(result => {
-        console.log(result)
         if (result.status !== 200) {
           throw new Error('Incorrect values.')
         }
         return result.json()
       })
       .then(user => {
-        console.log(user)
         this.setState(
           {
             user: user,
@@ -82,7 +75,6 @@ export class CurrentUserProvider extends Component {
         )
       })
       .catch(e => {
-        console.log('conumer login error', e)
         this.setState(
           {
             user: null,

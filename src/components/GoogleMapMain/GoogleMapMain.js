@@ -25,7 +25,6 @@ export class MapContainer extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps.clickedPoi)
     this.setState({
       clickedPoi: nextProps.clickedPoi
     })
