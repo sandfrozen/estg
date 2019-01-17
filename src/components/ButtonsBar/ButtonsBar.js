@@ -21,18 +21,24 @@ const ButtonsBar = () => {
           <Button color='primary' component={Link} to={`/new-poi`}>
             Add new POI
           </Button>
-          <Button color='primary' component={Link} to={'/edit-poi'}>
+          {/* <Button color='primary' component={Link} to={'/edit-poi'}>
             Edit POI
-          </Button>
-          <Button color='primary' component={Link} to={`/pois`}>
+          </Button> */}
+          <Button color='primary' component={Link} to={`/`}>
             All POIs
           </Button>
-          <Button color='primary' component={Link} to={`/pois`}>
-            My POIs
-          </Button>
-          <Button color='primary' component={Link} to={`/routes`}>
+          {user && (
+            <Button
+              color='primary'
+              component={Link}
+              to={`/user/${user.userID}`}
+            >
+              My POIs
+            </Button>
+          )}
+          {/* <Button color='primary' component={Link} to={`/routes`}>
             My Routes
-          </Button>
+          </Button> */}
         </div>
       )}
     </CurrentUserConsumer>

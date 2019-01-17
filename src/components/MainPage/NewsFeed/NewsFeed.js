@@ -14,7 +14,7 @@ class NewsFeed extends Component {
         const date = new Date(poi.dateCreated)
         const timeAgo = ta.ago(date)
         return (
-          <Fragment key={poi.commentID}>
+          <Fragment key={poi.poiID}>
             <div className='like-fragment'>
               <img
                 className='community-image'
