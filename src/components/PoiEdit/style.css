@@ -6,3 +6,14 @@
   height: 40vh;
   width: 100%;
 }
+
+.edit_avatar {
+  width: 50px;
+  height: 50px;
+  margin: auto 0;
+}
+
+.row_form_m {
+  margin-right: 8px;
+  margin-left: 8px;
+}

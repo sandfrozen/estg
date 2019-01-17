@@ -28,12 +28,12 @@ class PoiGridListTile extends Component {
           imageUrl = p.images[0].url
         } catch {}
         return (
-          <Fragment key={p.userPoiID}>
+          <Fragment key={p.poiID}>
             <GridListTile className='my-col' onClick={this.onClick(p)}>
               <img src={imageUrl} alt={p.title} />
               <GridListTileBar
                 title={p.title}
-                subtitle={<span>by: {p.user.name}</span>}
+                subtitle={<span>by: {p.user.name}, {p.private ? 'private' : 'public'}</span>}
                 className='titleBar'
                 actionIcon={
                   <IconButton

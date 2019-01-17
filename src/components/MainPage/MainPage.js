@@ -31,12 +31,19 @@ class MainPage extends Component {
   }
 
   fetchPois = async () => {
-    await fetch('https://localhost:5001/api/pois/public')
+    this.setState({ fetching: true })
+    let userID = 0
+    try {
+      const cookieUser = JSON.parse(localStorage.getItem('user'))
+      userID = cookieUser.userID
+    } catch (e) {}
+
+    await fetch('https://localhost:5001/api/pois/public/' + userID)
       .then(response => response.json())
       .then(publicPois => {
         this.setState({ publicPois, fetching: false, fetchingError: '' })
       })
-      .catch((e) => {
+      .catch(e => {
         this.setState({ fetching: false, fetchingError: e.message })
       })
   }
@@ -74,7 +81,11 @@ class MainPage extends Component {
 
               <Grid item md={6} xs={12} className='grid-item' id='desc'>
                 <Paper>
-                  <PoiInfo clickedPoi={clickedPoi} showLisbon={this.showLisbon} reload={this.fetchPois}/>
+                  <PoiInfo
+                    clickedPoi={clickedPoi}
+                    showLisbon={this.showLisbon}
+                    reload={this.fetchPois}
+                  />
                 </Paper>
               </Grid>
             </Grid>

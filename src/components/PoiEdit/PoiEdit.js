@@ -4,7 +4,8 @@ import {
   Typography,
   FormControlLabel,
   Switch,
-  FormGroup
+  FormGroup,
+  Divider
 } from '@material-ui/core'
 import { Redirect } from 'react-router-dom'
 import Loading from '../Loading/Loading'
@@ -15,21 +16,23 @@ import { Link } from 'react-router-dom'
 
 import './style.css'
 import GoogleMapEdit from './GoogleMapEdit'
+import PoiEditImages from './PoiEditImages'
 
 class PoiEdit extends Component {
   state = {
     poi: null,
     fetching: true,
-    saved: true
+    saving: null,
+    deleted: false
   }
 
   componentDidMount () {
-    this.fetchPoi()
+    this.getPoi()
   }
 
   poiId = () => this.props.match.params.id
 
-  fetchPoi = async () => {
+  getPoi = async () => {
     await fetch(`https://localhost:5001/api/pois/${this.poiId()}`)
       .then(response => response.json())
       .then(poi => {
@@ -53,7 +56,8 @@ class PoiEdit extends Component {
   }
 
   putPoi = async () => {
-    this.setState({ saved: false })
+    this.setState({ saving: true })
+
     const {
       title,
       description,
@@ -62,6 +66,7 @@ class PoiEdit extends Component {
       latitude,
       longitude
     } = this.state
+
     await fetch('https://localhost:5001/api/pois/' + poi.poiID, {
       method: 'PUT', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin
@@ -77,28 +82,55 @@ class PoiEdit extends Component {
         private: _private,
         userID: poi.userID
       }) // body data type must match "Content-Type" header
-    }).then(result => {
-      this.setState({ saved: true })
     })
+      .then(result => {
+        // TODO: check result status
+        this.setState({ saving: null })
+      })
+      .catch(e => {
+        this.setState({ saving: e.message })
+      })
   }
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value
+      [name]: event.target.value,
+      saving: 'Update'
     })
   }
 
   handleChangePrivate = () => {
-    this.setState({ _private: !this.state._private })
+    this.setState({ _private: !this.state._private, saving: 'Update' })
   }
 
   handleNewLatLng = (lat, lng) => {
-    this.setState({ latitude: lat, longitude: lng })
+    this.setState({ latitude: lat, longitude: lng, saving: 'Update' })
+  }
+
+  deletePoi = async () => {
+    await fetch('https://localhost:5001/api/pois/' + this.poiId(), {
+      method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, cors, *same-origin
+      headers: {
+        'Content-Type': 'application/json'
+      } // body data type must match "Content-Type" header
+    })
+      .then(result => {
+        if (result.status !== 204) {
+          new Error()
+        }
+        this.setState({ deleted: true })
+      })
+      .catch(e => {
+        this.setState({ updating: e.message })
+      })
   }
 
   render () {
-    const { fetching, poi } = this.state
-
+    const { fetching, poi, deleted } = this.state
+    if (deleted) {
+      return <Redirect to='/' />
+    }
     if (fetching === true) {
       return (
         <Paper className='paper-w-w'>
@@ -106,12 +138,12 @@ class PoiEdit extends Component {
         </Paper>
       )
     } else if (fetching === null) {
-      const { saved, latitude, longitude } = this.state
+      const { saving, latitude, longitude } = this.state
       return (
         <CurrentUserConsumer>
           {({ user }) => (
             <Paper className='paper-w-w'>
-              {(!user || user.userID !== poi.userID) && <Redirect to='/' />}
+              {user && user.userID !== poi.userID && <Redirect to='/' />}
               <Typography variant='h5' gutterBottom>
                 POI Editing:
               </Typography>
@@ -158,9 +190,13 @@ class PoiEdit extends Component {
                 }}
                 variant='contained'
                 color='primary'
-                disabled={!saved}
+                disabled={saving === true}
               >
-                {saved ? 'Saved' : 'Saving...'}
+                {saving === null
+                  ? 'Saved'
+                  : saving === true
+                    ? 'Saving...'
+                    : saving}
               </Button>
               <Button
                 component={Link}
@@ -169,16 +205,31 @@ class PoiEdit extends Component {
               >
                 Back
               </Button>
+              <PoiEditImages
+                userID={user ? user.userID : 1}
+                poiID={poi.poiID}
+              />
+              <Divider />
+              <br />
+              <p>
+                DANGER: if you press this button this POI and all related data
+                (likes, comments, pois from paths) will be removed.
+              </p>
+              <Button
+                onClick={() => {
+                  this.deletePoi()
+                }}
+                variant='contained'
+                color='secondary'
+              >
+                Delete POI
+              </Button>
             </Paper>
           )}
         </CurrentUserConsumer>
       )
     } else {
-      return (
-        <Paper className='paper-w-w'>
-          {this.state.fetching}
-        </Paper>
-      )
+      return <Paper className='paper-w-w'>{this.state.fetching}</Paper>
     }
   }
 }
