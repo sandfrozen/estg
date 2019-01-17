@@ -1,10 +1,9 @@
-import { KEY } from '../../secrets/googleMapsApi'
+import { KEY } from '../../../secrets/googleMapsApi'
 import React, { Component } from 'react'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'
 import './style.css'
-import Loading from '../Loading/Loading';
+import Loading from '../../Loading/Loading';
 
 const mapStyle = {
   borderRadius: 4,

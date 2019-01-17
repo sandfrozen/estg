@@ -8,6 +8,8 @@ import InfoIcon from '@material-ui/icons/Info'
 import './style.css'
 import { imagePlaceholder } from '../../../helpers/helpers'
 import Loading from '../../Loading/Loading'
+
+import ta from 'time-ago'
 import { Link } from 'react-router-dom'
 
 class PoiGridListTile extends Component {
@@ -33,7 +35,7 @@ class PoiGridListTile extends Component {
               <img src={imageUrl} alt={p.title} />
               <GridListTileBar
                 title={p.title}
-                subtitle={<span>by: {p.user.name}, {p.private ? 'private' : 'public'}</span>}
+                subtitle={<span>by: {p.user.name}, {p.private ? 'private' : 'public'}, {ta.ago(p.dateCreated)}</span>}
                 className='titleBar'
                 actionIcon={
                   <IconButton

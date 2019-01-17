@@ -81,7 +81,7 @@ class PoiEditImages extends Component {
         <div>
           <p>
             {saving === null
-              ? 'Add new image:'
+              ? 'Add new photo:'
               : saving === true
                 ? 'saving...'
                 : saving}
@@ -118,7 +118,8 @@ class PoiEditImages extends Component {
             </Button>
           </FormGroup>
           <Divider/>
-          <p>Edit images:</p>
+          <p>Edit photo:</p>
+          {divImages.length === 0 && <p>0 photos</p>}
           {divImages}
         </div>
       )

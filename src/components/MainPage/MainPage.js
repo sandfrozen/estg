@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import GridList from '@material-ui/core/GridList'
 import Paper from '@material-ui/core/Paper'
-import GoogleMapMain from '../GoogleMapMain/GoogleMapMain'
+import GoogleMapMain from './GoogleMapMain/GoogleMapMain'
 import PoiInfo from './PoiInfo/PoiInfo'
 import PoiGridListTile from './PoiGridListTile/PoiGridListTile'
 import NewsFeed from './NewsFeed/NewsFeed'
@@ -11,6 +11,8 @@ import { CurrentUserConsumer } from '../../context/CurrentUser.context'
 import CommentsLikesContainer from './CommentsLikes/CommentsLikesContainer'
 import './style.css'
 import './community.css'
+import Likes from './CommentsLikes/Likes'
+import Comments from './CommentsLikes/Comments'
 
 class MainPage extends Component {
   state = {
@@ -21,7 +23,7 @@ class MainPage extends Component {
     zoom: 11,
     clickedPoi: null,
     mapSize: 6,
-    publicPois: null,
+    publicPois: [],
     fetching: true,
     fetchingError: ''
   }
@@ -65,11 +67,15 @@ class MainPage extends Component {
   }
 
   render () {
-    const { clickedPoi, publicPois, fetchingError } = this.state
+    const { clickedPoi, publicPois } = this.state
+    let { userId } = 0
+    const cookieUser = JSON.parse(localStorage.getItem('user'))
+    if (cookieUser) userId = cookieUser.userID
     return (
       <CurrentUserConsumer>
         {({ user }) => (
           <div className='root-main'>
+            {console.log('user', user)}
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
                 <GoogleMapMain
@@ -101,13 +107,13 @@ class MainPage extends Component {
             </GridList>
             <Grid container>
               <Grid item md={4} xs={12} className='grid-item' id='news'>
-                <NewsFeed user={user} />
+                <NewsFeed userId={userId} pois={publicPois} />
+              </Grid>
+              <Grid item md={4} xs={12} className='grid-item' id='likes'>
+                <Likes userId={userId} />
               </Grid>
               <Grid item md={4} xs={12} className='grid-item' id='comments'>
-                <CommentsLikesContainer user={user} />
-              </Grid>
-              <Grid item md={4} xs={12} className='grid-item' id='friends'>
-                <Friends user={user} />
+                <Comments userId={userId} />
               </Grid>
             </Grid>
           </div>

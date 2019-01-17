@@ -13,7 +13,7 @@ class CommentsLikesContainer extends Component {
       <Paper style={{ height: '100%' }}>
         <div className='community-cl'>
           <div className='community-headline'>
-            Likes: <Link to={`/likes`}>show more</Link>
+            Likes:
           </div>
           <div className='community-likes'>
             {user ? <Likes userId={user.userID} /> : 'login to see this content'}
@@ -21,7 +21,7 @@ class CommentsLikesContainer extends Component {
         </div>
         <div className='community-cl'>
           <div className='community-headline sec-headline'>
-            Comments: <Link to={`/comments`}>show more</Link>
+            Comments:
           </div>
           <div className='community-comments'>
             {user ? <Comments userId={user.userID} /> : 'login to see this content'}

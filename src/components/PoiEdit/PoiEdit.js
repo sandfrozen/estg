@@ -80,7 +80,8 @@ class PoiEdit extends Component {
         latitude: latitude,
         longitude: longitude,
         private: _private,
-        userID: poi.userID
+        userID: poi.userID,
+        dateCreated: poi.dateCreated
       }) // body data type must match "Content-Type" header
     })
       .then(result => {
@@ -182,6 +183,7 @@ class PoiEdit extends Component {
                   updateLatLng={this.handleNewLatLng}
                   lat={latitude}
                   lng={longitude}
+                  editable={true}
                 />
               </div>
               <Button

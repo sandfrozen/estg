@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Divider } from '@material-ui/core'
+import { Divider, Paper } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Loading from '../../Loading/Loading'
 import ta from 'time-ago'
@@ -27,7 +27,7 @@ class Likes extends Component {
 
   render () {
     const { likes, fetching } = this.state
-    const { userId } = this.props
+    const userId = this.props.userId
     let divLikes = fetching === true ? <Loading /> : 'no likes'
     if (likes !== null && likes.length > 0) {
       divLikes = likes.map(like => {
@@ -39,8 +39,7 @@ class Likes extends Component {
               <img
                 className='community-image'
                 src={
-                  like.poi.images[0].url ||
-                  'https://via.placeholder.com/150'
+                  like.poi.images[0].url || 'https://via.placeholder.com/150'
                 }
                 alt='poi'
               />
@@ -64,7 +63,14 @@ class Likes extends Component {
       })
     }
 
-    return <div>{divLikes}</div>
+    return (
+      <Paper style={{ height: '100%' }}>
+        <div className='community-cl'>
+          <div className='community-headline'>Likes:</div>
+          <div className='community-likes'>{userId === 0 ? 'login to see this content' : divLikes}</div>
+        </div>
+      </Paper>
+    )
   }
 }
 

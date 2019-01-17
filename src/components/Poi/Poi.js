@@ -46,7 +46,7 @@ class Poi extends Component {
         <CurrentUserConsumer>
           {({ user }) => (
             <Paper className='paper-w-w'>
-              {poi.private === true && poi.userID !== user.userID ? (
+              {(user && poi.private === true && poi.userID !== user.userID) ? (
                 <Paper className='paper-w-w'>This POI is private.</Paper>
               ) : (
                 <Fragment>

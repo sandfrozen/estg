@@ -45,19 +45,19 @@
 
 @media (max-width: 959px) {
   .my-col {
-    width: 60% !important;
+    width: 40vw !important;
   }
 }
 
 @media (min-width: 960px) and (max-width: 1279px) {
   .my-col {
-    width: 40% !important;
+    width: 30vw !important;
   }
 }
 
 @media (min-width: 1280px) {
   .my-col {
-    width: calc( 25% - 12px) !important;
+    width: calc( 20vw - 12px) !important;
   }
 }
 

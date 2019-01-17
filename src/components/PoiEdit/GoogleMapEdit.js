@@ -19,10 +19,12 @@ const mapContainer = {
 
 export class MapContainer extends Component {
   onMapClicked = (props, map, e) => {
-    const lat = e.latLng.lat()
-    const lng = e.latLng.lng()
-    console.log('m', lat, lng)
-    this.props.updateLatLng(lat, lng)
+    if (this.props.editable) {
+      const lat = e.latLng.lat()
+      const lng = e.latLng.lng()
+      console.log('m', lat, lng)
+      this.props.updateLatLng(lat, lng)
+    }
   }
 
   render () {

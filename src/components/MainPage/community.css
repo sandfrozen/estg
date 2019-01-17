@@ -9,11 +9,11 @@
 }
 
 .community-cl {
-  height: 50%;
+  height: 100%;
 }
 
 .community-likes {
-  height: calc(100% - 44px);
+  height: calc(100% - 48px);
   /* 37 + 16 */
   overflow-y: scroll;
   overflow-x: hidden;

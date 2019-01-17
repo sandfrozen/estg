@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Divider } from '@material-ui/core'
+import { Divider, Paper } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Loading from '../../Loading/Loading'
 import ta from 'time-ago'
@@ -55,10 +55,7 @@ class Comments extends Component {
                   </Link>
                 )}{' '}
                 wrote a comment:{' '}
-                <Link
-                  className='community-title'
-                  to={`/poi/${comment.poiID}`}
-                >
+                <Link className='community-title' to={`/poi/${comment.poiID}`}>
                   {comment.poi.title}
                 </Link>
                 <br />
@@ -71,7 +68,16 @@ class Comments extends Component {
       })
     }
 
-    return <div>{divComments}</div>
+    return (
+      <Paper>
+        <div className='community-cl'>
+          <div className='community-headline sec-headline'>Comments:</div>
+          <div className='community-comments'>
+            {userId === 0 ? 'login to see this content' : divComments}
+          </div>
+        </div>
+      </Paper>
+    )
   }
 }
 
