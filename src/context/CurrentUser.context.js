@@ -88,6 +88,7 @@ export class CurrentUserProvider extends Component {
   }
 
   login = (mail, password) => {
+    console.log('logginng', mail, password)
     this.setState({ processing: true })
     setTimeout(() => {
       this.getUser(mail, password)

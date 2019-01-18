@@ -10,14 +10,15 @@ class Comments extends Component {
     fetching: true
   }
 
-  componentDidMount () {
-    this.fetchCommentsForUser()
+  componentWillReceiveProps (nextProps, nextContex) {
+    console.log('cr', nextProps.userId)
+    if (nextProps.userId > 0) {
+      this.fetchCommentsForUser(nextProps.userId)
+    }
   }
 
-  fetchCommentsForUser = async () => {
-    await fetch(
-      `https://localhost:5001/api/comments/forUser/${this.props.userId}`
-    )
+  fetchCommentsForUser = async userId => {
+    await fetch(`https://localhost:5001/api/comments/forUser/${userId}`)
       .then(result => result.json())
       .then(comments => {
         this.setState({ comments, fetching: false })

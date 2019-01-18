@@ -68,14 +68,11 @@ class MainPage extends Component {
 
   render () {
     const { clickedPoi, publicPois } = this.state
-    let { userId } = 0
-    const cookieUser = JSON.parse(localStorage.getItem('user'))
-    if (cookieUser) userId = cookieUser.userID
     return (
       <CurrentUserConsumer>
         {({ user }) => (
           <div className='root-main'>
-            {console.log('user', user)}
+            {console.log('user main page', user)}
             <Grid container>
               <Grid item md={6} xs={12} className='grid-item' id='map'>
                 <GoogleMapMain
@@ -107,13 +104,13 @@ class MainPage extends Component {
             </GridList>
             <Grid container>
               <Grid item md={4} xs={12} className='grid-item' id='news'>
-                <NewsFeed userId={userId} pois={publicPois} />
+                <NewsFeed userId={user !== null ? user.userID : 0} pois={publicPois} />
               </Grid>
               <Grid item md={4} xs={12} className='grid-item' id='likes'>
-                <Likes userId={userId} />
+                <Likes userId={user !== null ? user.userID : 0} />
               </Grid>
               <Grid item md={4} xs={12} className='grid-item' id='comments'>
-                <Comments userId={userId} />
+                <Comments userId={user !== null ? user.userID : 0} />
               </Grid>
             </Grid>
           </div>

@@ -1,6 +1,7 @@
 .user-image {
   width: 100px;
   height: 100px;
+  float: right;
 }
 
 .user-container {
@@ -10,14 +11,33 @@
   justify-content: center;
 }
 
+.password-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.width-a {
+  width: 50%;
+}
 .user-form {
   margin: auto 16px;
 }
 
-.width-a {
+#cp  {
+  display: none;
+}
+
+/* .full-width {
+  width: 100%;
+} */
+
+/* .width-a {
 
 }
 
 .width-b {
   width: 40%;
-}
+} */
