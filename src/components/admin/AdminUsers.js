@@ -39,6 +39,7 @@ class AdminUsers extends Component {
     if (secure === true) {
       const { users, fetching } = this.state
       const usersDiv = users.map(u => {
+        if(u.userID === 1) return null
         return <UserRow user={u} />
       })
 
@@ -46,7 +47,7 @@ class AdminUsers extends Component {
         return (
           <Paper className='paper-w-w'>
             <Typography variant='h6' gutterBottom>
-              Manage users active state:
+              Manage users access:
             </Typography>
             <Table>
               <TableHead>
@@ -54,7 +55,7 @@ class AdminUsers extends Component {
                   <TableCell>Id</TableCell>
                   <TableCell align='right'>Name</TableCell>
                   <TableCell align='right'>Mail</TableCell>
-                  <TableCell align='right'>Active?</TableCell>
+                  <TableCell align='right'>Have Access?</TableCell>
                   <TableCell align='right' className='r-width'>Info</TableCell>
                 </TableRow>
               </TableHead>

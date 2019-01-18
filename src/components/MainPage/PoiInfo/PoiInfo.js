@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 import './style.css'
 import { imagePlaceholder } from '../../../helpers/helpers'
+import ta from 'time-ago'
 
 class PoiInfo extends Component {
   componentDidUpdate () {
@@ -57,6 +58,7 @@ class PoiInfo extends Component {
             />
           </div>
           <div className='poi_title'>{clickedPoi.title}</div>
+          <Typography variant="caption" style={{paddingLeft: 16}} gutterBottom>Added {ta.ago(clickedPoi.dateCreated)}, {clickedPoi.private ? 'private' : 'public'}</Typography>
           <div className='poi_desc'>{clickedPoi.description}</div>
           <Button
             color='primary'

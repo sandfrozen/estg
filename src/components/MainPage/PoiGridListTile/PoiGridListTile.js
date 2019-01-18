@@ -10,7 +10,6 @@ import { imagePlaceholder } from '../../../helpers/helpers'
 import Loading from '../../Loading/Loading'
 
 import ta from 'time-ago'
-import { Link } from 'react-router-dom'
 
 class PoiGridListTile extends Component {
   userPoiInfoIconClick = () => {
