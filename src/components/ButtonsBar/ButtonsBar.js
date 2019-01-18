@@ -36,6 +36,15 @@ const ButtonsBar = () => {
               My POIs
             </Button>
           )}
+          {user && (
+            <Button
+              color='primary'
+              component={Link}
+              to={`/user/${user.userID}`}
+            >
+              My paths
+            </Button>
+          )}
           {/* <Button color='primary' component={Link} to={`/routes`}>
             My Routes
           </Button> */}
