@@ -9,6 +9,7 @@ import ta from 'time-ago'
 import UserPois from './UserPois'
 import { CurrentUserConsumer } from '../../context/CurrentUser.context'
 import $ from 'jquery'
+import UserPaths from './UserPaths'
 
 class User extends Component {
   state = {
@@ -23,14 +24,15 @@ class User extends Component {
     pois: [],
     oldPassword: '',
     newPassword: '',
-    passwordInfo: 'Change'
+    passwordInfo: 'Change',
+    paths: []
   }
 
   componentDidMount () {
     this.fetchUser()
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps (nextProps, nextContext) {
     // this.props = nextProps
     // this.fetchUser()
   }
@@ -71,6 +73,7 @@ class User extends Component {
               if (userID === user.userID) {
                 this.setState({ editable: true })
               }
+              this.fetchPaths()
             } catch (e) {}
           }
         )
@@ -152,6 +155,20 @@ class User extends Component {
       })
   }
 
+  fetchPaths = async () => {
+    const userID = this.state.user.userID
+    await fetch(`https://localhost:5001/api/paths/forUser/${userID}`)
+      .then(response => response.json())
+      .then(paths => {
+        this.setState({
+          paths
+        })
+      })
+      .catch(e => {
+        // this.setState({ fetching: e.message })
+      })
+  }
+
   render () {
     const {
       user,
@@ -218,7 +235,12 @@ class User extends Component {
                     Change password
                   </Button>
                   {user.userID === 1 && (
-                    <Button component={Link} className='to_right' to='/admin' color='secondary'>
+                    <Button
+                      component={Link}
+                      className='to_right'
+                      to='/admin'
+                      color='secondary'
+                    >
                       Admin panel
                     </Button>
                   )}
@@ -282,6 +304,8 @@ class User extends Component {
               )}
 
               <UserPois pois={pois} editable={editable} />
+              <Divider />
+              <UserPaths paths={this.state.paths} editable={editable} />
             </Paper>
           )}
         </CurrentUserConsumer>
