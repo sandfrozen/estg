@@ -32,9 +32,18 @@ class User extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
-      changed: true
+      [name]: event.target.value
     })
+    if (name === 'oldPassword' || name === 'newPassword') {
+      this.setState({
+        passwordInfo: 'Change'
+      })
+    } else {
+      this.setState({
+        changed: true
+      })
+    }
+    
   }
 
   fetchUser = async () => {
@@ -75,17 +84,20 @@ class User extends Component {
       this.state.newPassword,
       this.state.user.userID
     )
-    await fetch('https://localhost:5001/api/auth/change/'+this.state.newPassword, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, cors, *same-origin
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userID: this.state.user.userID,
-        password: this.state.oldPassword
-      }) // body data type must match "Content-Type" header
-    })
+    await fetch(
+      'https://localhost:5001/api/auth/change/' + this.state.newPassword,
+      {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: this.state.user.userID,
+          password: this.state.oldPassword
+        }) // body data type must match "Content-Type" header
+      }
+    )
       .then(result => {
         console.log(result)
         if (result.status !== 200) {
@@ -97,7 +109,8 @@ class User extends Component {
           oldPassword: '',
           passwordInfo: 'Changed'
         })
-        $('#cp').toggle();
+        window.alert('Password changed!')
+        $('#cp').toggle()
       })
       .catch(e => {
         this.setState({ passwordInfo: e.message })
@@ -129,7 +142,6 @@ class User extends Component {
         console.log(result)
         this.setState({ changed: false })
         login(newMail, user.password)
-        $('#cp').toggle()
       })
       .catch(e => {
         this.setState({ changed: e.message })
@@ -169,13 +181,13 @@ class User extends Component {
 
                 <div className='user-form width-a'>
                   <InputBase
-                    defaultValue={newName}
+                    value={newName}
                     disabled={!editable}
                     onChange={this.handleChange('newName')}
                     fullWidth
                   />
                   <InputBase
-                    defaultValue={newMail}
+                    value={newMail}
                     disabled={!editable}
                     onChange={this.handleChange('newMail')}
                     fullWidth
@@ -225,7 +237,7 @@ class User extends Component {
                           autoComplete='old-password'
                           margin='normal'
                           onChange={this.handleChange('oldPassword')}
-                          defaultValue={oldPassword}
+                          value={oldPassword}
                           fullWidth
                         />
                         <TextField
@@ -235,7 +247,7 @@ class User extends Component {
                           autoComplete='new-password'
                           margin='normal'
                           onChange={this.handleChange('newPassword')}
-                          defaultValue={newPassword}
+                          value={newPassword}
                           fullWidth
                         />
                       </div>
