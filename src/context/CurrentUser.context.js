@@ -56,7 +56,10 @@ export class CurrentUserProvider extends Component {
       }) // body data type must match "Content-Type" header
     })
       .then(result => {
-        if (result.status !== 200) {
+        if(result.status === 401) {
+          throw new Error('This user is blocked.')
+        }
+        else if (result.status !== 200) {
           throw new Error('Incorrect values.')
         }
         return result.json()

@@ -80,6 +80,7 @@ class Login extends Component {
 
   render () {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
+    if( from.pathname === '/admin/users') from.pathname = '/'
     const {
       tab,
       usedMails,

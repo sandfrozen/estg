@@ -30,6 +30,11 @@ class User extends Component {
     this.fetchUser()
   }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    // this.props = nextProps
+    // this.fetchUser()
+  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -43,7 +48,6 @@ class User extends Component {
         changed: true
       })
     }
-    
   }
 
   fetchUser = async () => {
@@ -110,7 +114,7 @@ class User extends Component {
           passwordInfo: 'Changed'
         })
         window.alert('Password changed!')
-        $('#cp').toggle()
+        $('#cp').toggle(300)
       })
       .catch(e => {
         this.setState({ passwordInfo: e.message })
@@ -210,9 +214,14 @@ class User extends Component {
                         ? 'Saved'
                         : changed}
                   </Button>
-                  <Button onClick={() => $('#cp').toggle()} color='primary'>
+                  <Button onClick={() => $('#cp').toggle(300)} color='primary'>
                     Change password
                   </Button>
+                  {user.userID === 1 && (
+                    <Button component={Link} className='to_right' to='/admin' color='secondary'>
+                      Admin panel
+                    </Button>
+                  )}
                   <br />
                   <br />
                   <Divider />

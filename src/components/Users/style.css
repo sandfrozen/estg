@@ -1,0 +1,15 @@
+.cont {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  height: 35vh;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+#users {
+  margin-bottom: 16px;
+}
+
+.user-selected {
+  background-color: lightgoldenrodyellow;
+}
